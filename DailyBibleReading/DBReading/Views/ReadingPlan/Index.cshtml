@@ -1,0 +1,26 @@
+﻿@model DBReading.Models.Reading
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@Model.Name Plan @string.Format("{0:d} - {1:d}", Model.StartDate, Model.EndDate)</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Reading</th>
+            <th>Date</th>
+            <th>Day of the week</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var read in Model.ReadingAndDate)
+        {
+            <tr>
+                <td>@read.Key</td>
+                <td>@read.Value</td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
