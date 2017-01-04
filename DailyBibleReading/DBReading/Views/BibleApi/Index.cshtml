@@ -1,0 +1,13 @@
+﻿@model  DBReading.Models.BibleApi.Rootobject
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<ol>
+    @foreach (var item in Model.response.books)
+    {
+        <li>@item.name</li>
+    }
+</ol>

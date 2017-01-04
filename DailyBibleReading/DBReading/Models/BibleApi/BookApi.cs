@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.Serialization;
+using System.Web;
 
-namespace ApiCalls
+namespace DBReading.Models.BibleApi
 {
-        public class Rootobject
+        public class Rootobject_BookApi
         {
             public Response response { get; set; }
         }
@@ -78,6 +76,4 @@ namespace ApiCalls
             public string name { get; set; }
             public string id { get; set; }
         }
-
-
 }

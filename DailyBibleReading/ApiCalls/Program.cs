@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -6,7 +7,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-
 
 namespace ApiCalls
 {
@@ -27,6 +27,7 @@ namespace ApiCalls
 
         static async void Run()
         {
+            Rootobject rootobj = null;
             using (var client = new HttpClient())
             {
                 var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", _token, _password)));
@@ -35,8 +36,15 @@ namespace ApiCalls
 
                 var response = await client.GetAsync(uri);
                 string textResult = await response.Content.ReadAsStringAsync();
+                rootobj = JsonConvert.DeserializeObject<Rootobject>(textResult);
 
-                Console.WriteLine(textResult);
+                //var test = rootobj.response.search.result.passages[0].text.ToString();
+                
+                 //Console.WriteLine(test);
+                 foreach (var item in rootobj.response.books)
+                 {
+                     Console.WriteLine(item.name);
+                 }
             }
         }
 
