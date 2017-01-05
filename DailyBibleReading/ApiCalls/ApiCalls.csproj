@@ -50,7 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BibleBooksApiClient.cs" />
+    <Compile Include="BibleApi\BookApi.cs" />
+    <Compile Include="BibleApi\GroupBook.cs" />
+    <Compile Include="BibleApi\PassageApi.cs" />
     <Compile Include="GetBibleApiClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

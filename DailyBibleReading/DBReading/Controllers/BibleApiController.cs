@@ -1,5 +1,5 @@
 ﻿using DBReading.Models;
-using DBReading.Models.BibleApi;
+using DBReading.Models.Book;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ namespace DBReading.Controllers
         // GET: BibleApi
         public async Task<ActionResult> Index()
         {
-            Rootobject_BookApi book = null;
+            Rootobject_Book book = null;
             using (var client = new HttpClient())
             {
                 var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", _token, _password)));
@@ -33,16 +33,16 @@ namespace DBReading.Controllers
                 string textResult = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
                 {
-                    book = JsonConvert.DeserializeObject<Rootobject_BookApi>(textResult);
+                    book = JsonConvert.DeserializeObject<Rootobject_Book>(textResult);
                 }
             }
             return View(book);
             
         }
 
-        private async Task<Rootobject_BookApi> GetAllBooks()
+        private async Task<Rootobject_Book> GetAllBooks()
         {
-            Rootobject_BookApi book = null;
+            Rootobject_Book book = null;
             using (var client = new HttpClient())
             {
                 var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", _token, _password)));
@@ -53,7 +53,7 @@ namespace DBReading.Controllers
                 string textResult = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
                 {
-                    book = JsonConvert.DeserializeObject<Rootobject_BookApi>(textResult);
+                    book = JsonConvert.DeserializeObject<Rootobject_Book>(textResult);
                 }
             }
             return (book);        

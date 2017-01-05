@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace DBReading.Models.BibleApi
+﻿
+namespace DBReading.Models.Book
 {
-        public class Rootobject_BookApi
+        public class Rootobject_Book
         {
             public Response response { get; set; }
         }
@@ -76,4 +72,6 @@ namespace DBReading.Models.BibleApi
             public string name { get; set; }
             public string id { get; set; }
         }
+
+
 }
