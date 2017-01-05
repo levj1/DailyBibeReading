@@ -1,13 +1,8 @@
-﻿@model  DBReading.Models.BibleApi.Rootobject
+﻿@model  DBReading.Models.Passage.Rootobject_Passage
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
 
-<ol>
-    @foreach (var item in Model.response.books)
-    {
-        <li>@item.name</li>
-    }
-</ol>
+@Html.Raw(Model.response.search.result.passages[0].text)

@@ -167,7 +167,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\BibleApi\ApiClass.cs" />
+    <Compile Include="Models\BibleApi\BookApi.cs" />
+    <Compile Include="Models\BibleApi\GroupBook.cs" />
+    <Compile Include="Models\BibleApi\PassageApi.cs" />
+    <Compile Include="Models\BibleApi\test.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
