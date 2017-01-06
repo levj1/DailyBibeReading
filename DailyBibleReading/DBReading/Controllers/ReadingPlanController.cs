@@ -14,7 +14,7 @@ namespace DBReading.Controllers
         // GET: ReadingPlan
         public ActionResult Index()
         {
-            Reading reading = new Reading("Chronological");
+            ReadingPlan reading = new ReadingPlan("Chronological");
             string path = @"C:\Users\James Leveille\Documents\GitHub\DailyBibeReading\DailyBibleReading\DBReading\Content\plan1.txt";
             string line;
             var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);

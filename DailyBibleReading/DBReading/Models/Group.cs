@@ -9,6 +9,6 @@ namespace DBReading.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public List<Reader> Reader { get; set; }
+        public ReadingPlan ReadingPlan { get; set; }
     }
 }
