@@ -10,6 +10,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using ApiCalls.GroupBook;
+using System.IO;
 
 namespace ApiCalls
 {
@@ -24,7 +25,26 @@ namespace ApiCalls
 
         static void Main(string[] args)
         {
-            RunGroupBookApi();
+            string line = "";
+            List<string> readdingList = new List<string>();
+            string path = @"C:\Users\James Leveille\Desktop\testprint\2YearPlan.txt";
+            var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
+            {
+                while ((line = streamReader.ReadLine()) != null)
+                {
+                    int numDot = line.IndexOf('.');
+                    if (numDot > 0)
+                    {
+                        line = line.Substring(numDot + 1);
+                        readdingList.Add(line);
+                    }
+                }
+            }
+            foreach (var item in readdingList)
+            {
+                Console.WriteLine(item);
+            }
             Console.ReadLine();
         }
 
