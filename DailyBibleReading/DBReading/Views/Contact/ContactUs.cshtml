@@ -1,0 +1,45 @@
+﻿@model DBReading.ViewModels.ContactViewModel
+@{
+    ViewBag.Title = "ContactUs";
+}
+
+<h2>Contact Us</h2>
+@using (@Html.BeginForm("ContactUs", "Contact"))
+{
+    <div class="container">
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(c => c.Contact.FirstName)
+                @Html.TextBoxFor(c => c.Contact.FirstName, new { @class = "form-controller" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(c => c.Contact.LastName)
+                @Html.TextBoxFor(c => c.Contact.LastName, new { @class = "form-controller" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(c => c.Contact.Email)
+                @Html.TextBoxFor(c => c.Contact.Email, new { @class = "form-controller" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(c => c.Contact.Comment)
+                @Html.TextAreaFor(c => c.Contact.Comment, new { rows = 10, columns = 80})
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Send</button>
+            </div>
+        </div>
+    </div>
+}
+

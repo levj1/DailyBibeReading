@@ -160,6 +160,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BibleApiController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReadingPlanController.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Models\BibleApi\GroupBook.cs" />
     <Compile Include="Models\BibleApi\PassageApi.cs" />
     <Compile Include="Models\BibleApi\test.cs" />
+    <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -178,6 +180,7 @@
     <Compile Include="Models\ReadingPlan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ContactViewModel.cs" />
     <Compile Include="WeatherApiClient.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +242,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\ReadingPlan\Index.cshtml" />
     <Content Include="Views\BibleApi\Index.cshtml" />
+    <Content Include="Views\Contact\ContactUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
