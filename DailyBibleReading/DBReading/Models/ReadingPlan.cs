@@ -9,11 +9,10 @@ namespace DBReading.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public DateTime StartDate { get { return DateTime.Now; } }
+        public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string[] ReadingList { get; set; }
         public Dictionary<string, DateTime> ReadingAndDate { get; set; }
-        public string TodayPassage { get; set; }
 
         public ReadingPlan()
         {
@@ -35,6 +34,7 @@ namespace DBReading.Models
 
         public Dictionary<string, DateTime> CreateReadingPlan()
         {
+            StartDate = Convert.ToDateTime("2016-01-12");
             for (int i = 0; i < ReadingList.Length; i++)
             {
                 if (i == 0)

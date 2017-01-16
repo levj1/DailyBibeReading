@@ -167,6 +167,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701161818310_CreateReadingPlan.cs" />
+    <Compile Include="Migrations\201701161818310_CreateReadingPlan.Designer.cs">
+      <DependentUpon>201701161818310_CreateReadingPlan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701161821124_CreateReadingPlan1.cs" />
+    <Compile Include="Migrations\201701161821124_CreateReadingPlan1.Designer.cs">
+      <DependentUpon>201701161821124_CreateReadingPlan1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701161826175_CreateReadingPlan2.cs" />
+    <Compile Include="Migrations\201701161826175_CreateReadingPlan2.Designer.cs">
+      <DependentUpon>201701161826175_CreateReadingPlan2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BibleApi\BookApi.cs" />
     <Compile Include="Models\BibleApi\GroupBook.cs" />
@@ -178,6 +191,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Reader.cs" />
     <Compile Include="Models\ReadingPlan.cs" />
+    <Compile Include="Models\ReadingPlanDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ContactViewModel.cs" />
@@ -253,6 +267,17 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201701161818310_CreateReadingPlan.resx">
+      <DependentUpon>201701161818310_CreateReadingPlan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701161821124_CreateReadingPlan1.resx">
+      <DependentUpon>201701161821124_CreateReadingPlan1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701161826175_CreateReadingPlan2.resx">
+      <DependentUpon>201701161826175_CreateReadingPlan2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

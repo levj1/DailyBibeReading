@@ -20,6 +20,8 @@ namespace DBReading.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<ReadingPlan> ReadingPlan { get; set; }
+        public DbSet<ReadingPlanDetail> ReadingPlanDetail { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

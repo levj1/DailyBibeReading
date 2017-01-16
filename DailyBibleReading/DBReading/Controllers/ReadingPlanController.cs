@@ -11,6 +11,16 @@ namespace DBReading.Controllers
 {
     public class ReadingPlanController : Controller
     {        
+        private ApplicationDbContext _context;
+        public ReadingPlanController()
+        {
+            _context = new ApplicationDbContext();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
         // GET: ReadingPlan
         public ActionResult Index()
         {
@@ -26,6 +36,22 @@ namespace DBReading.Controllers
                 }
             }
             reading.CreateReadingPlan();
+
+            // Add reading plan to database
+            _context.ReadingPlan.Add(reading);
+            _context.SaveChanges();
+
+            // Add reading plan detail
+            foreach (var item in reading.ReadingAndDate)
+            {
+                ReadingPlanDetail planDetail = new ReadingPlanDetail();
+                planDetail.ReadingPlanID = reading.ID;
+                planDetail.PassageReference = item.Key;
+                planDetail.PassageDate = item.Value;
+
+                _context.ReadingPlanDetail.Add(planDetail);
+                _context.SaveChanges();
+            }
             return View(reading);
         }
     }
