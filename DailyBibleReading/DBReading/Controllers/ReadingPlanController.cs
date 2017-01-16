@@ -38,8 +38,8 @@ namespace DBReading.Controllers
             reading.CreateReadingPlan();
 
             // Add reading plan to database
-            _context.ReadingPlan.Add(reading);
-            _context.SaveChanges();
+            //_context.ReadingPlan.Add(reading);
+            //_context.SaveChanges();
 
             // Add reading plan detail
             foreach (var item in reading.ReadingAndDate)
@@ -49,8 +49,8 @@ namespace DBReading.Controllers
                 planDetail.PassageReference = item.Key;
                 planDetail.PassageDate = item.Value;
 
-                _context.ReadingPlanDetail.Add(planDetail);
-                _context.SaveChanges();
+                //_context.ReadingPlanDetail.Add(planDetail);
+                //_context.SaveChanges();
             }
             return View(reading);
         }

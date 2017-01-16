@@ -34,7 +34,10 @@ namespace DBReading.Models
 
         public Dictionary<string, DateTime> CreateReadingPlan()
         {
-            StartDate = Convert.ToDateTime("2016-01-12");
+            if (StartDate == null || StartDate.Year == 1)
+            {
+                StartDate = DateTime.Now;
+            }
             for (int i = 0; i < ReadingList.Length; i++)
             {
                 if (i == 0)
