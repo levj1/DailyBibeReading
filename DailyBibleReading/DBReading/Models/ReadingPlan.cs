@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -9,9 +10,12 @@ namespace DBReading.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
+
+        [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string[] ReadingList { get; set; }
+        public string[] BookOption { get; set; }
         public Dictionary<string, DateTime> ReadingAndDate { get; set; }
 
         public ReadingPlan()

@@ -1,0 +1,40 @@
+﻿@model DBReading.ViewModels.GeneratePlanViewModel
+@{
+    ViewBag.Title = "CreatePlan";
+}
+
+<h2>CreatePlan</h2>
+@using (@Html.BeginForm())
+{
+    <div class="container">
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(c => c.ReadingPlan.Name)
+                @Html.TextBoxFor(c => c.ReadingPlan.Name, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(c => c.ReadingPlan.StartDate)
+                @Html.TextBoxFor(c => c.ReadingPlan.StartDate, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                @Html.Label("Choose a Book of set of Books") <br />
+                @foreach (var item in Model.GroupBook.response.bookgroups)
+                {
+                    @Html.RadioButtonFor(m => m.ReadingPlan.BookOption, item.name) 
+                    @item.name <br />
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+    </div>
+    
+}
+
