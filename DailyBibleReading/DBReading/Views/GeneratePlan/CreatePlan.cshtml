@@ -16,7 +16,7 @@
         <div class="row">
             <div class="form-group">
                 @Html.LabelFor(c => c.ReadingPlan.StartDate)
-                @Html.TextBoxFor(c => c.ReadingPlan.StartDate, new { @class = "form-control" })
+                @Html.EditorFor(c => c.ReadingPlan.StartDate, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
         <div class="row">
