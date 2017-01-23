@@ -20,15 +20,17 @@ namespace DBReading.Models
         [Display(Name = "End Date")]
         [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
-        public string[] BookOption { get; set; }
 
+        public string SelectedReadingOption { get; set; }
+        
         public ReadingPlan()
+            :this("")
         {
         }
         public ReadingPlan(string name)
         {
             Name = name;
-        }
-        
+        }        
     }
+    
 }

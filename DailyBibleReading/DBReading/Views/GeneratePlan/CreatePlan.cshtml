@@ -4,7 +4,7 @@
 }
 
 <h2>CreatePlan</h2>
-@using (@Html.BeginForm())
+@using (@Html.BeginForm("CreatePlan", "GeneratePlan"))
 {
     <div class="container">
         <div class="row">
@@ -31,17 +31,30 @@
         </div>*@
         <div class="row">
             <div class="form-group">
-                @Html.Label("Choose a Book") <br />
-                @Html.DropDownListFor(m => m.ReadingPlan.BookOption, new SelectList(Model._66BibleBooks, "id", "name"))
-                @Html.HiddenFor(c => c.BookSelected, new SelectList(Model._66BibleBooks, "id", "name"))
+                @Html.Label("Select book(s) for the reading") <br />
+                @Html.DropDownListFor(m => m.DropDownReadingSelected, new SelectList(Model.DropDownReadingOption), new { onchange = "$(this.form).submit();" })
             </div>
         </div>
+        @if (Model.DropDownReadingSelected == "Single Book")
+        {
+            <div class="row">
+                <div class="form-group">
+                    @Html.Label("Choose a Book") <br />
+                    @Html.DropDownListFor(m => m.ReadingPlan.SelectedReadingOption, new SelectList(Model._66BibleBooks, "id", "name"))
+                </div>
+            </div>
+        }
+        
         <div class="row">
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary" name="submit">Create</button>
             </div>
         </div>
-    </div>
-    
+    </div>    
 }
 
+<script type="text/javascript">
+    function testfunction(value) {
+        alert(value);
+    }
+</script>
