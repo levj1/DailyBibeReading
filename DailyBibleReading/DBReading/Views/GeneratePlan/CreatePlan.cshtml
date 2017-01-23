@@ -19,14 +19,21 @@
                 @Html.EditorFor(c => c.ReadingPlan.StartDate, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
-        <div class="row">
+        @*<div class="row">
             <div class="form-group">
                 @Html.Label("Choose a Book of set of Books") <br />
-                @foreach (var item in Model.GroupBook.response.bookgroups)
+                @foreach (var item in Model.BibleBooks.response.books)
                 {
                     @Html.RadioButtonFor(m => m.ReadingPlan.BookOption, item.name) 
                     @item.name <br />
                 }
+            </div>
+        </div>*@
+        <div class="row">
+            <div class="form-group">
+                @Html.Label("Choose a Book") <br />
+                @Html.DropDownListFor(m => m.ReadingPlan.BookOption, new SelectList(Model._66BibleBooks, "id", "name"))
+                @Html.HiddenFor(c => c.BookSelected, new SelectList(Model._66BibleBooks, "id", "name"))
             </div>
         </div>
         <div class="row">

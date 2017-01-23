@@ -181,6 +181,10 @@
     <Compile Include="Migrations\201701161826175_CreateReadingPlan2.Designer.cs">
       <DependentUpon>201701161826175_CreateReadingPlan2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701220330375_AddPropertyToReadingPlan.cs" />
+    <Compile Include="Migrations\201701220330375_AddPropertyToReadingPlan.Designer.cs">
+      <DependentUpon>201701220330375_AddPropertyToReadingPlan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BibleApi\BookApi.cs" />
@@ -282,6 +286,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701161826175_CreateReadingPlan2.resx">
       <DependentUpon>201701161826175_CreateReadingPlan2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701220330375_AddPropertyToReadingPlan.resx">
+      <DependentUpon>201701220330375_AddPropertyToReadingPlan.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

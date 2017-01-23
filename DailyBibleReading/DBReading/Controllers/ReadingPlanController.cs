@@ -1,4 +1,5 @@
 ﻿using DBReading.Models;
+using DBReading.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,7 +25,7 @@ namespace DBReading.Controllers
         // GET: ReadingPlan
         public ActionResult Index()
         {
-            ReadingPlan reading = new ReadingPlan("Chronological");
+            GeneratePlanViewModel vm = new GeneratePlanViewModel();
             string path = @"C:\Users\James Leveille\Documents\GitHub\DailyBibeReading\DailyBibleReading\DBReading\Content\plan1.txt";
             string line;
             var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
@@ -32,27 +33,27 @@ namespace DBReading.Controllers
             {
                 while ((line = streamReader.ReadLine()) != null)
                 {
-                    reading.ReadingList = line.Split(';');
+                    vm.ReadingList = line.Split(';');
                 }
             }
-            reading.CreateReadingPlan();
+            vm.CreateReadingPlan();
 
             // Add reading plan to database
             //_context.ReadingPlan.Add(reading);
             //_context.SaveChanges();
 
             // Add reading plan detail
-            foreach (var item in reading.ReadingAndDate)
+            foreach (var item in vm.ReadingAndDate)
             {
                 ReadingPlanDetail planDetail = new ReadingPlanDetail();
-                planDetail.ReadingPlanID = reading.ID;
+                planDetail.ReadingPlanID = vm.ReadingPlan.ID;
                 planDetail.PassageReference = item.Key;
                 planDetail.PassageDate = item.Value;
 
                 //_context.ReadingPlanDetail.Add(planDetail);
                 //_context.SaveChanges();
             }
-            return View(reading);
+            return View(vm);
         }
     }
 }
