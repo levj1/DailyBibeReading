@@ -22,6 +22,7 @@ namespace DBReading.Models
     {
         public DbSet<ReadingPlan> ReadingPlan { get; set; }
         public DbSet<ReadingPlanDetail> ReadingPlanDetail { get; set; }
+        public DbSet<Contact> Contact { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

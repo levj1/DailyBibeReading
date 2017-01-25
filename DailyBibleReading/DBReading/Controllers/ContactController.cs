@@ -1,4 +1,5 @@
-﻿using DBReading.ViewModels;
+﻿using DBReading.Models;
+using DBReading.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +11,21 @@ namespace DBReading.Controllers
     public class ContactController : Controller
     {
         // GET: Conact
-        public ActionResult Index()
+        public ActionResult ContactUs()
         {
-            var contactVM = new ContactViewModel();
-            return View("ContactUs", contactVM);
+            var contact = new Contact();
+            return View("ContactUs", contact);
         }
+
+
         [HttpPost]
-        public ActionResult ContactUs(ContactViewModel contact)
+        public ActionResult ContactUs([Bind(Include = "FirstName, LastName, Email, Comment")] Contact contact)
         {
-            var contactVM = new ContactViewModel { };
-            return View(contactVM);
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("ContactUs");
+            }
+            return View(contact);
         }
     }
 }

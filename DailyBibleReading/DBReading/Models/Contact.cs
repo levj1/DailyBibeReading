@@ -8,7 +8,9 @@ namespace DBReading.Models
 {
     public class Contact
     {
-        [Required]
+        public int ID { get; set; }
+
+         [Required(ErrorMessage = "Please enter first name.")]
         [StringLength(30)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
@@ -22,6 +24,7 @@ namespace DBReading.Models
         [StringLength(30)]
         public string Email { get; set; }
 
+        [Required]
         public string Comment { get; set; }
     }
 }

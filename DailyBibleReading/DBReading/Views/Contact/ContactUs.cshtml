@@ -1,44 +1,50 @@
-﻿@model DBReading.ViewModels.ContactViewModel
+﻿@model DBReading.Models.Contact
 @{
     ViewBag.Title = "ContactUs";
 }
-
-<h2>Contact Us</h2>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
 @using (@Html.BeginForm("ContactUs", "Contact"))
 {
-    <div class="container">
-        <div class="row">
-            <div class="form-group">
-                @Html.LabelFor(c => c.Contact.FirstName)
-                @Html.TextBoxFor(c => c.Contact.FirstName, new { @class = "form-controller" })
-            </div>
+    <div class="row">
+        <div class="form-group">
+            <h2>Contact Us</h2>
         </div>
-
-        <div class="row">
-            <div class="form-group">
-                @Html.LabelFor(c => c.Contact.LastName)
-                @Html.TextBoxFor(c => c.Contact.LastName, new { @class = "form-controller" })
-            </div>
+    </div>
+    <div class="row">
+        <div class="editor-field">
+            @Html.LabelFor(c => c.FirstName)
         </div>
-
-        <div class="row">
-            <div class="form-group">
-                @Html.LabelFor(c => c.Contact.Email)
-                @Html.TextBoxFor(c => c.Contact.Email, new { @class = "form-controller" })
-            </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(c => c.FirstName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.FirstName)
         </div>
+    </div>
 
-        <div class="row">
-            <div class="form-group">
-                @Html.LabelFor(c => c.Contact.Comment)
-                @Html.TextAreaFor(c => c.Contact.Comment, new { rows = 10, columns = 80})
-            </div>
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(c => c.LastName)
+            @Html.TextBoxFor(c => c.LastName, new { @class = "form-control" })
         </div>
+    </div>
 
-        <div class="row">
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Send</button>
-            </div>
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(c => c.Email)
+            @Html.TextBoxFor(c => c.Email, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(c => c.Comment)
+            @Html.TextAreaFor(c => c.Comment, new { @class = "form-control", rows = 10, columns = 80 })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Send</button>
         </div>
     </div>
 }
