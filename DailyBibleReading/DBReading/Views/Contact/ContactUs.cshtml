@@ -2,22 +2,21 @@
 @{
     ViewBag.Title = "ContactUs";
 }
-<script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
-@using (@Html.BeginForm("ContactUs", "Contact"))
+
+<div class="row">
+    <div class="form-group">
+        <h2>Contact Us</h2>
+    </div>
+</div>
+@using (@Html.BeginForm())
 {
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.AntiForgeryToken()
+    
     <div class="row">
         <div class="form-group">
-            <h2>Contact Us</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="editor-field">
             @Html.LabelFor(c => c.FirstName)
-        </div>
-        <div class="editor-field">
             @Html.TextBoxFor(c => c.FirstName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(c => c.FirstName)
         </div>
     </div>
 
@@ -27,7 +26,6 @@
             @Html.TextBoxFor(c => c.LastName, new { @class = "form-control" })
         </div>
     </div>
-
     <div class="row">
         <div class="form-group">
             @Html.LabelFor(c => c.Email)

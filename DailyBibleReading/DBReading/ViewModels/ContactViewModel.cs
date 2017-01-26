@@ -17,7 +17,7 @@ namespace DBReading.ViewModels
                 return Contact.FirstName + " " + Contact.LastName;
             }
         }
-        private bool IsValidEmail(string email)
+        public bool IsValidEmail(string email)
         {
             bool valid = false;
             if (email.IndexOf('.') > 0 && email.IndexOf('@') > 0)

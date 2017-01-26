@@ -10,21 +10,21 @@ namespace DBReading.Models
     {
         public int ID { get; set; }
 
-         [Required(ErrorMessage = "Please enter first name.")]
+        [Required(ErrorMessage = "Please enter first name.")]
         [StringLength(30)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter last name.")]
         [StringLength(30)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Email address is required")]
         [StringLength(30)]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "The comment section can not be blank.")]
         public string Comment { get; set; }
     }
 }
