@@ -6,6 +6,8 @@
 <h2>CreatePlan</h2>
 @using (@Html.BeginForm("CreatePlan", "GeneratePlan"))
 {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     <div class="container">
         <div class="row">
             <div class="form-group">
@@ -32,7 +34,7 @@
         <div class="row">
             <div class="form-group">
                 @Html.Label("Select book(s) for the reading") <br />
-                @Html.DropDownListFor(m => m.DropDownReadingSelected, new SelectList(Model.DropDownReadingOption), new { onchange = "$(this.form).submit();" })
+                @Html.DropDownListFor(m => m.DropDownReadingSelected, new SelectList(Model.DropDownReadingOption), new { onchange = "testfunction();" })
             </div>
         </div>
         @if (Model.DropDownReadingSelected == "Single Book")

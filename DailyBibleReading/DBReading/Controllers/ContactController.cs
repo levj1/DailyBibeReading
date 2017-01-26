@@ -33,6 +33,8 @@ namespace DBReading.Controllers
                 // Send email
                 try
                 {
+                    string email = System.Configuration.ConfigurationManager.AppSettings["fromEmail"];
+                    string emailpass = System.Configuration.ConfigurationManager.AppSettings["fromEmailPassword"];
                     MailMessage msg = new MailMessage();
                     SmtpClient smtp = new SmtpClient();
                     msg.From = new MailAddress(contact.Email.ToString());
@@ -44,7 +46,7 @@ namespace DBReading.Controllers
                     smtp.Port = 587;
                     smtp.EnableSsl = true;
                     smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    smtp.Credentials = new System.Net.NetworkCredential("**", "**");
+                    smtp.Credentials = new System.Net.NetworkCredential(email, emailpass);
                     sb.Append("First name: " + contact.FirstName);
                     sb.Append(Environment.NewLine);
                     sb.Append("Last name: " + contact.LastName);

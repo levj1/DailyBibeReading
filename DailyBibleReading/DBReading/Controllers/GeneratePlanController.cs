@@ -59,29 +59,34 @@ namespace DBReading.Controllers
         [HttpPost]
         public ActionResult CreatePlan(GeneratePlanViewModel planViewModel, FormCollection form)
         {
+
+            if (ModelState.IsValid)
+            {
+                switch (planViewModel.DropDownReadingSelected)
+                {
+                    case "Single Book":
+                        return View("CreatePlan", planViewModel);
+                        break;
+                    case "Group Book":
+                        break;
+                    case "New Testatment":
+                        break;
+                    case "Old Testament":
+                        break;
+                    case "Random Books":
+                        break;
+                    case "Other":
+                        break;
+                    default:
+                        CreatePlanForBook(planViewModel);
+                        break;
+                }
+            }
             // Which type of reading option is selected
 
             // Create plan depend on what was selected
             //"Whole Bible", "Group Book", "New Testatment", "Old Testament", "Single Book", "Random Books", "Other"
-            switch (planViewModel.DropDownReadingSelected)
-            {
-                case "Single Book":
-                    return View("CreatePlan", planViewModel);
-                    break;
-                case "Group Book":
-                    break;
-                case "New Testatment":
-                    break;
-                case "Old Testament":
-                    break;
-                case "Random Books":
-                    break;
-                case "Other":
-                    break;
-                default:
-                    CreatePlanForBook(planViewModel);
-                    break;
-            }
+            
 
             // Add reading plan to database
             //_context.ReadingPlan.Add(reading);

@@ -268,7 +268,7 @@
     <Content Include="Views\ReadingPlan\Index.cshtml" />
     <Content Include="Views\BibleApi\Index.cshtml" />
     <Content Include="Views\Contact\ContactUs.cshtml" />
-    <Content Include="Views\GeneratePlan\CreatePlan.cshtml" />
+    <Content Include="Views\GeneratePlan\Index.cshtml" />
     <Content Include="Views\GeneratePlan\CreatePlanResult.cshtml" />
     <Content Include="Views\Contact\Success.cshtml" />
   </ItemGroup>
