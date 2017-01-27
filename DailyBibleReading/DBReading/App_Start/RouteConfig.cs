@@ -13,11 +13,17 @@ namespace DBReading
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            //routes.MapRoute {
-            //    "BooksList",
-            //    "Home/Books/List/{Groupbookcode}",
-            //    new { controller = "Home", action = "BookList", Groupbookcode = "" }
-            //    };
+            routes.MapRoute (
+                "StatesList",
+                "Home/States/List/{CountryCode}",
+                new { controller = "Home", action = "StateList", CountryCode = "" }
+                );
+
+            routes.MapRoute (
+                "CountriesList",
+                "Home/Countries/List",
+                new { controller = "Home", action = "CountryList" }
+                );
 
             routes.MapRoute(
                 name: "Default",

@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $.getJSON("/Home/Countries/List", function (data) {
+                var items = "<option> -------------</option>";
+                $.each(data, function (i, country) {
+                    items += "<option value='" + country.Value + "'>" + country.Text + "</option>";
+                });
+                $("#Countries").html(items);
+            });
+
+            $("#countries").change(function () {
+                $.getJSON("/Home/States/List/" + $("#Countries > option:selected").attr("value"), function (data) {
+                    var items = "<option> -------------</option>";
+                    $.each(data, function (i, state) {
+                        items += "<option value='" + state.Value + "'>" + state.Text + "</option>";
+                    });
+                    $("#states").html(items);
+                });
+            });
+        });
+    </script>
+}
+<h2>Index</h2>
+@using (Html.BeginForm())
+{
+    <label for="Countries">Countries</label>
+    <select id="Countries" name="Countries"></select>
+
+    <br /><br />
+
+    <label for="States">States</label>
+    <select id="States" name="States"></select>
+
+    <br /><br />
+    <input type="submit" value="submit" />
+}
+
