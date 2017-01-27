@@ -5,6 +5,7 @@ using DBReading.Models.Passage;
 using DBReading.ViewModels;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -93,6 +94,66 @@ namespace DBReading.Controllers
             //_context.SaveChanges();
 
             return View();
+        }
+
+        public ActionResult Test()
+        {
+            return View();
+        }
+        public async Task<ActionResult> BookList()
+        {
+            Rootobject_Book bibleBook = null;
+            using (var client = new HttpClient())
+            {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", _token, _password)));
+                var uri = new Uri(_BookURL);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
+                var response = await client.GetAsync(uri);
+                string textResult = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    bibleBook = JsonConvert.DeserializeObject<Rootobject_Book>(textResult);
+                }
+            }
+            IQueryable books = bibleBook.response.books.AsQueryable();
+            if (HttpContext.Request.IsAjaxRequest())
+            {
+                return Json(new SelectList(
+                    books,
+                    "version_id",
+                    "name"), JsonRequestBehavior.AllowGet
+                    );
+            }
+            return View(books);
+        }
+
+        public async Task<ActionResult> GroupBookList()
+        {
+            Rootobject_GroupBook bibleGroupBook = null;
+            using (var client = new HttpClient())
+            {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", _token, _password)));
+                var uri = new Uri(_groupbook);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
+                var response = await client.GetAsync(uri);
+                string textResult = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    bibleGroupBook = JsonConvert.DeserializeObject<Rootobject_GroupBook>(textResult);
+                }
+            }
+            IQueryable groupBooks = bibleGroupBook.response.bookgroups.AsQueryable();
+            if (HttpContext.Request.IsAjaxRequest())
+            {
+                return Json(new SelectList(
+                    groupBooks,
+                    "id",
+                    "name"), JsonRequestBehavior.AllowGet
+                    );
+            }
+            return View(groupBooks);
         }
 
         private async Task<Rootobject_Book> GetAllBooks()

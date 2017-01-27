@@ -1,0 +1,54 @@
+﻿@model DBReading.ViewModels.GeneratePlanViewModel
+@{
+    ViewBag.Title = "CreatePlan";
+}
+
+<h2>CreatePlan</h2>
+@using (@Html.BeginForm("CreatePlan", "GeneratePlan"))
+{
+    <div class="container">
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(c => c.ReadingPlan.Name)
+                @Html.TextBoxFor(c => c.ReadingPlan.Name, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(c => c.ReadingPlan.StartDate)
+                @Html.EditorFor(c => c.ReadingPlan.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        @*<div class="row">
+                <div class="form-group">
+                    @Html.Label("Choose a Book of set of Books") <br />
+                    @foreach (var item in Model.BibleBooks.response.books)
+                    {
+                        @Html.RadioButtonFor(m => m.ReadingPlan.BookOption, item.name)
+                        @item.name <br />
+                    }
+                </div>
+            </div>*@
+        <div class="row">
+            <div class="form-group">
+                @Html.Label("Select book(s) for the reading") <br />
+                @Html.DropDownListFor(m => m.DropDownReadingSelected, new SelectList(Model.DropDownReadingOption), new { onchange = "$(this.form).submit();" })
+            </div>
+        </div>
+        @if (Model.DropDownReadingSelected == "Single Book")
+        {
+            <div class="row">
+                <div class="form-group">
+                    @Html.Label("Choose a Book") <br />
+                    @Html.DropDownListFor(m => m.ReadingPlan.SelectedReadingOption, new SelectList(Model._66BibleBooks, "id", "name"))
+                </div>
+            </div>
+        }
+
+        <div class="row">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" name="submit">Create</button>
+            </div>
+        </div>
+    </div>
+}

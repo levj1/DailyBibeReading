@@ -271,6 +271,7 @@
     <Content Include="Views\GeneratePlan\Index.cshtml" />
     <Content Include="Views\GeneratePlan\CreatePlanResult.cshtml" />
     <Content Include="Views\Contact\Success.cshtml" />
+    <Content Include="Views\GeneratePlan\CreatePlan2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
