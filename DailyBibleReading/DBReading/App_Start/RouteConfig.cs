@@ -16,14 +16,27 @@ namespace DBReading
             routes.MapRoute (
                 "StatesList",
                 "Home/States/List/{CountryCode}",
-                new { controller = "Home", action = "StateList", CountryCode = "" }
+                new { controller = "Test", action = "StateList", CountryCode = "" }
                 );
 
             routes.MapRoute (
                 "CountriesList",
                 "Home/Countries/List",
-                new { controller = "Home", action = "CountryList" }
+                new { controller = "Test", action = "CountryList" }
                 );
+
+            routes.MapRoute(
+                "BookList",
+                "Home/Books/List/{name}",
+                new { controller = "GeneratePlan", action = "BookList", Name = "", id = "" }
+                );
+
+            routes.MapRoute(
+                "GroupList",
+                "Home/Groups/List",
+                new { controller = "GeneratePlan", action = "GroupBookList" }
+                );
+
 
             routes.MapRoute(
                 name: "Default",

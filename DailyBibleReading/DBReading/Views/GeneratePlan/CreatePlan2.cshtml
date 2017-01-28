@@ -1,4 +1,4 @@
-﻿@model DBReading.ViewModels.GeneratePlanViewModel
+﻿@model DBReading.Models.ReadingPlan
 @{
     ViewBag.Title = "CreatePlan";
 }
@@ -9,14 +9,14 @@
     <div class="container">
         <div class="row">
             <div class="form-group">
-                @Html.LabelFor(c => c.ReadingPlan.Name)
-                @Html.TextBoxFor(c => c.ReadingPlan.Name, new { @class = "form-control" })
+                @Html.LabelFor(c => c.Name)
+                @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
             </div>
         </div>
         <div class="row">
             <div class="form-group">
-                @Html.LabelFor(c => c.ReadingPlan.StartDate)
-                @Html.EditorFor(c => c.ReadingPlan.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.LabelFor(c => c.StartDate)
+                @Html.EditorFor(c => c.StartDate, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
         @*<div class="row">
@@ -31,19 +31,16 @@
             </div>*@
         <div class="row">
             <div class="form-group">
-                @Html.Label("Select book(s) for the reading") <br />
-                @Html.DropDownListFor(m => m.DropDownReadingSelected, new SelectList(Model.DropDownReadingOption), new { onchange = "$(this.form).submit();" })
+                <label for="GroupBook">Group Book</label>
+                <select id="GroupBook" name="GroupBook"></select>                
             </div>
         </div>
-        @if (Model.DropDownReadingSelected == "Single Book")
-        {
             <div class="row">
                 <div class="form-group">
-                    @Html.Label("Choose a Book") <br />
-                    @Html.DropDownListFor(m => m.ReadingPlan.SelectedReadingOption, new SelectList(Model._66BibleBooks, "id", "name"))
+                    <label for="Book">Book</label>
+                    <select id="Book" name="Book"></select>
                 </div>
             </div>
-        }
 
         <div class="row">
             <div class="form-group">

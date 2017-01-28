@@ -10,6 +10,7 @@ namespace DBReading.Models
         public string CountryCode { get; set; }
         public int StateID { get; set; }
         public string StateName { get; set; }
+
         public static IQueryable<State> GetStates()
         {
             return new List<State>

@@ -36,22 +36,10 @@ namespace DBReading.Controllers
         public async Task<ActionResult> CreatePlan()
         {
             ReadingPlan readingPlan = new ReadingPlan();
-            Rootobject_Book bibleBooks = await GetAllBooks();
             GeneratePlanViewModel gpVM = new GeneratePlanViewModel()
             {
-                ReadingPlan = readingPlan,
-                BibleBooks = bibleBooks
+                ReadingPlan = readingPlan
             };
-            
-            foreach (var item in bibleBooks.response.books)
-            {
-                BibleBook individualBook = new BibleBook(item.id, item.name,item.abbr, item.book_group_id, item.testament, item.osis_end);
-                // get only the real 66 books of the bible 
-                if (gpVM.RealBookList.Contains(item.name))
-                {
-                    gpVM._66BibleBooks.Add(individualBook);
-                }
-            }
             
             return View(gpVM);
         }
@@ -96,64 +84,80 @@ namespace DBReading.Controllers
             return View();
         }
 
-        public ActionResult Test()
+        public ActionResult CreatePlan2()
         {
-            return View();
-        }
-        public async Task<ActionResult> BookList()
-        {
-            Rootobject_Book bibleBook = null;
-            using (var client = new HttpClient())
-            {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", _token, _password)));
-                var uri = new Uri(_BookURL);
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
-
-                var response = await client.GetAsync(uri);
-                string textResult = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode)
-                {
-                    bibleBook = JsonConvert.DeserializeObject<Rootobject_Book>(textResult);
-                }
-            }
-            IQueryable books = bibleBook.response.books.AsQueryable();
-            if (HttpContext.Request.IsAjaxRequest())
-            {
-                return Json(new SelectList(
-                    books,
-                    "version_id",
-                    "name"), JsonRequestBehavior.AllowGet
-                    );
-            }
-            return View(books);
+            ReadingPlan readplan = new ReadingPlan();
+            return View(readplan);
         }
 
-        public async Task<ActionResult> GroupBookList()
+        public ActionResult GroupBookList()
         {
-            Rootobject_GroupBook bibleGroupBook = null;
-            using (var client = new HttpClient())
-            {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", _token, _password)));
-                var uri = new Uri(_groupbook);
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
-
-                var response = await client.GetAsync(uri);
-                string textResult = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode)
-                {
-                    bibleGroupBook = JsonConvert.DeserializeObject<Rootobject_GroupBook>(textResult);
-                }
-            }
-            IQueryable groupBooks = bibleGroupBook.response.bookgroups.AsQueryable();
+            IQueryable groupBooks = GroupBookDropdown.GetDropDownList().AsQueryable();
             if (HttpContext.Request.IsAjaxRequest())
             {
                 return Json(new SelectList(
                     groupBooks,
-                    "id",
+                    "name",
                     "name"), JsonRequestBehavior.AllowGet
                     );
             }
             return View(groupBooks);
+        }
+
+        public ActionResult BookList(string name, int id = 0)
+        {
+            IQueryable biblBooks;
+            switch (name)
+            {
+                case "Whole Bible":
+                    biblBooks = _context.BibleBook.AsQueryable();
+                    break;
+                case "Old Testament":
+                    biblBooks = _context.BibleBook.AsQueryable().Where(x => x.Testament == name);
+                    break;
+                case "New Testament":
+                    biblBooks = _context.BibleBook.AsQueryable().Where(x => x.Testament == name);
+                    break;
+                case "Group Book":
+                    biblBooks = _context.BibleBook.AsQueryable().Where(x => x.ReadingGroupBookID == id);
+                    break;
+                case "Single Book":
+                    biblBooks = _context.BibleBook.AsQueryable();
+                    break;
+                case "Random Books":
+                    biblBooks = _context.BibleBook.AsQueryable();
+                    break;
+                case "Other":
+                    biblBooks = _context.BibleBook.AsQueryable();
+                    break;
+                default:
+                    biblBooks = _context.BibleBook.AsQueryable();
+                    break;
+            }
+
+            if (HttpContext.Request.IsAjaxRequest())
+            {
+                return Json(new SelectList(
+                    biblBooks,
+                    "id",
+                    "name"), JsonRequestBehavior.AllowGet
+                    );
+            }
+            return View(biblBooks);
+        }
+
+        public ActionResult DropDownOptionList()
+        { 
+            IQueryable dropOption = GroupBookDropdown.GetDropDownList();
+            if (HttpContext.Request.IsAjaxRequest())
+            {
+                return Json(new SelectList(
+                    dropOption,
+                    "id",
+                    "name"), JsonRequestBehavior.AllowGet
+                    );
+            }
+            return View();
         }
 
         private async Task<Rootobject_Book> GetAllBooks()

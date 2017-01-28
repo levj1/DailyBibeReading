@@ -13,18 +13,19 @@
                 $("#Countries").html(items);
             });
 
-            $("#countries").change(function () {
+            $("#Countries").change(function () {
                 $.getJSON("/Home/States/List/" + $("#Countries > option:selected").attr("value"), function (data) {
                     var items = "<option> -------------</option>";
                     $.each(data, function (i, state) {
                         items += "<option value='" + state.Value + "'>" + state.Text + "</option>";
                     });
-                    $("#states").html(items);
+                    $("#States").html(items);
                 });
             });
         });
     </script>
 }
+
 <h2>Index</h2>
 @using (Html.BeginForm())
 {

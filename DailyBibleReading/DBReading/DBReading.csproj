@@ -190,18 +190,77 @@
     <Compile Include="Migrations\201701252108329_AddContact.Designer.cs">
       <DependentUpon>201701252108329_AddContact.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701280520267_AddContact1.cs" />
+    <Compile Include="Migrations\201701280520267_AddContact1.Designer.cs">
+      <DependentUpon>201701280520267_AddContact1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701280522574_ReadingGroupOption.cs" />
+    <Compile Include="Migrations\201701280522574_ReadingGroupOption.Designer.cs">
+      <DependentUpon>201701280522574_ReadingGroupOption.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701280524156_ReadingGroupOptionData.cs" />
+    <Compile Include="Migrations\201701280524156_ReadingGroupOptionData.Designer.cs">
+      <DependentUpon>201701280524156_ReadingGroupOptionData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701280531470_AddBibleBook.cs" />
+    <Compile Include="Migrations\201701280531470_AddBibleBook.Designer.cs">
+      <DependentUpon>201701280531470_AddBibleBook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701280535038_AddBibleBookData.cs" />
+    <Compile Include="Migrations\201701280535038_AddBibleBookData.Designer.cs">
+      <DependentUpon>201701280535038_AddBibleBookData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701280535455_AddBibleBookData1.cs" />
+    <Compile Include="Migrations\201701280535455_AddBibleBookData1.Designer.cs">
+      <DependentUpon>201701280535455_AddBibleBookData1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701280603261_DeleteAddGroupBookData.cs" />
+    <Compile Include="Migrations\201701280603261_DeleteAddGroupBookData.Designer.cs">
+      <DependentUpon>201701280603261_DeleteAddGroupBookData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701280605553_Add66Books.cs" />
+    <Compile Include="Migrations\201701280605553_Add66Books.Designer.cs">
+      <DependentUpon>201701280605553_Add66Books.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701280609286_DeleteDataGroupBook.cs" />
+    <Compile Include="Migrations\201701280609286_DeleteDataGroupBook.Designer.cs">
+      <DependentUpon>201701280609286_DeleteDataGroupBook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701280612490_DeleteReadingGroupBook.cs" />
+    <Compile Include="Migrations\201701280612490_DeleteReadingGroupBook.Designer.cs">
+      <DependentUpon>201701280612490_DeleteReadingGroupBook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701280616023_ReAddReadingGroupBook.cs" />
+    <Compile Include="Migrations\201701280616023_ReAddReadingGroupBook.Designer.cs">
+      <DependentUpon>201701280616023_ReAddReadingGroupBook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701280616236_ReDataReadingGroupBook.cs" />
+    <Compile Include="Migrations\201701280616236_ReDataReadingGroupBook.Designer.cs">
+      <DependentUpon>201701280616236_ReDataReadingGroupBook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701280618137_ReAddBibleBook.cs" />
+    <Compile Include="Migrations\201701280618137_ReAddBibleBook.Designer.cs">
+      <DependentUpon>201701280618137_ReAddBibleBook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701280640134_MoreReadingGroupBook.cs" />
+    <Compile Include="Migrations\201701280640134_MoreReadingGroupBook.Designer.cs">
+      <DependentUpon>201701280640134_MoreReadingGroupBook.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BibleApi\BookApi.cs" />
     <Compile Include="Models\BibleApi\GroupBook.cs" />
     <Compile Include="Models\BibleApi\PassageApi.cs" />
     <Compile Include="Models\BibleApi\test.cs" />
+    <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\GroupBookDropdown.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Reader.cs" />
+    <Compile Include="Models\ReadingGroupOption.cs" />
     <Compile Include="Models\ReadingPlan.cs" />
     <Compile Include="Models\ReadingPlanDetail.cs" />
     <Compile Include="Models\State.cs" />
@@ -302,6 +361,48 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701252108329_AddContact.resx">
       <DependentUpon>201701252108329_AddContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701280520267_AddContact1.resx">
+      <DependentUpon>201701280520267_AddContact1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701280522574_ReadingGroupOption.resx">
+      <DependentUpon>201701280522574_ReadingGroupOption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701280524156_ReadingGroupOptionData.resx">
+      <DependentUpon>201701280524156_ReadingGroupOptionData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701280531470_AddBibleBook.resx">
+      <DependentUpon>201701280531470_AddBibleBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701280535038_AddBibleBookData.resx">
+      <DependentUpon>201701280535038_AddBibleBookData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701280535455_AddBibleBookData1.resx">
+      <DependentUpon>201701280535455_AddBibleBookData1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701280603261_DeleteAddGroupBookData.resx">
+      <DependentUpon>201701280603261_DeleteAddGroupBookData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701280605553_Add66Books.resx">
+      <DependentUpon>201701280605553_Add66Books.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701280609286_DeleteDataGroupBook.resx">
+      <DependentUpon>201701280609286_DeleteDataGroupBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701280612490_DeleteReadingGroupBook.resx">
+      <DependentUpon>201701280612490_DeleteReadingGroupBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701280616023_ReAddReadingGroupBook.resx">
+      <DependentUpon>201701280616023_ReAddReadingGroupBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701280616236_ReDataReadingGroupBook.resx">
+      <DependentUpon>201701280616236_ReDataReadingGroupBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701280618137_ReAddBibleBook.resx">
+      <DependentUpon>201701280618137_ReAddBibleBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701280640134_MoreReadingGroupBook.resx">
+      <DependentUpon>201701280640134_MoreReadingGroupBook.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

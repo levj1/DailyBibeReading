@@ -2,7 +2,29 @@
 @{
     ViewBag.Title = "CreatePlan";
 }
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $.getJSON("/Home/Groups/List", function (data) {
+                var items = "<option> -------------</option>";
+                $.each(data, function (i, group) {
+                    items += "<option value='" + group.Value + "'>" + group.Text + "</option>";
+                });
+                $("#GroupBook").html(items);
+            });
 
+            $("#GroupBook").change(function () {
+                $.getJSON("/Home/Books/List/" + $("#GroupBook > option:selected").attr("value"), function (data) {
+                    var items = "<option> -------------</option>";
+                    $.each(data, function (i, book) {
+                        items += "<option value='" + book.Value + "'>" + book.Text + "</option>";
+                    });
+                    $("#Book").html(items);
+                });
+            });
+        });
+    </script>
+}
 <h2>CreatePlan</h2>
 @using (@Html.BeginForm("CreatePlan", "GeneratePlan"))
 {
@@ -31,22 +53,27 @@
                 }
             </div>
         </div>*@
-        <div class="row">
+        @*<div class="row">
+
             <div class="form-group">
                 @Html.Label("Select book(s) for the reading") <br />
                 @Html.DropDownListFor(m => m.DropDownReadingSelected, new SelectList(Model.DropDownReadingOption), new { onchange = "testfunction();" })
             </div>
-        </div>
-        @if (Model.DropDownReadingSelected == "Single Book")
-        {
-            <div class="row">
-                <div class="form-group">
-                    @Html.Label("Choose a Book") <br />
-                    @Html.DropDownListFor(m => m.ReadingPlan.SelectedReadingOption, new SelectList(Model._66BibleBooks, "id", "name"))
-                </div>
+        </div>*@
+        <div class="row">
+            <div class="form-group">
+                <label for="GroupBook">Group book:</label>
+                <select id="GroupBook" name="GroupBook"></select>
             </div>
-        }
-        
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="Book">books:</label>
+                <select id="Book" name="Book"></select>
+            </div>
+        </div>
+
         <div class="row">
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" name="submit">Create</button>
