@@ -15,6 +15,7 @@
 
             $("#Countries").change(function () {
                 $.getJSON("/Home/States/List/" + $("#Countries > option:selected").attr("value"), function (data) {
+                    alert($("#Countries").val());
                     var items = "<option> -------------</option>";
                     $.each(data, function (i, state) {
                         items += "<option value='" + state.Value + "'>" + state.Text + "</option>";

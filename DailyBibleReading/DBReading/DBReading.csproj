@@ -246,13 +246,17 @@
     <Compile Include="Migrations\201701280640134_MoreReadingGroupBook.Designer.cs">
       <DependentUpon>201701280640134_MoreReadingGroupBook.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701292010219_UpdateReadingPlan.cs" />
+    <Compile Include="Migrations\201701292010219_UpdateReadingPlan.Designer.cs">
+      <DependentUpon>201701292010219_UpdateReadingPlan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BibleApi\BookApi.cs" />
     <Compile Include="Models\BibleApi\GroupBook.cs" />
     <Compile Include="Models\BibleApi\PassageApi.cs" />
     <Compile Include="Models\BibleApi\test.cs" />
-    <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\BibleBook.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Group.cs" />
@@ -403,6 +407,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701280640134_MoreReadingGroupBook.resx">
       <DependentUpon>201701280640134_MoreReadingGroupBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701292010219_UpdateReadingPlan.resx">
+      <DependentUpon>201701292010219_UpdateReadingPlan.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -15,14 +15,12 @@ namespace DBReading.ViewModels
         public Rootobject_GroupBook GroupBook { get; set; }
         public ReadingPlan ReadingPlan { get; set; }
         public string[] DropDownReadingOption { get; set; }
-        public string DropDownReadingSelected { get; set; }
         public string[] ReadingList { get; set; }
 
         public Dictionary<string, DateTime> ReadingAndDate { get; set; }
         public GeneratePlanViewModel()
         {
             ReadingAndDate = new Dictionary<string, DateTime>();
-            DropDownReadingOption = new string[] { "Whole Bible", "Group Book", "New Testatment", "Old Testament", "Single Book", "Random Books", "Other" };
         }
 
 

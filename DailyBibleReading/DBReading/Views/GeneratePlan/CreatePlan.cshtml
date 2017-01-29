@@ -1,12 +1,13 @@
-﻿@model DBReading.ViewModels.GeneratePlanViewModel
+﻿@model DBReading.Models.ReadingPlan
 @{
-    ViewBag.Title = "CreatePlan";
+    ViewBag.Title = "Create Plan";
 }
 @section scripts{
     <script type="text/javascript">
+        $("#divBook").hide();
         $(function () {
             $.getJSON("/Home/Groups/List", function (data) {
-                var items = "<option> -------------</option>";
+                var items;
                 $.each(data, function (i, group) {
                     items += "<option value='" + group.Value + "'>" + group.Text + "</option>";
                 });
@@ -15,11 +16,16 @@
 
             $("#GroupBook").change(function () {
                 $.getJSON("/Home/Books/List/" + $("#GroupBook > option:selected").attr("value"), function (data) {
-                    var items = "<option> -------------</option>";
-                    $.each(data, function (i, book) {
-                        items += "<option value='" + book.Value + "'>" + book.Text + "</option>";
-                    });
-                    $("#Book").html(items);
+                    if ($("#GroupBook").val() == "Group Book" || $("#GroupBook").val() == "Single Book") {
+                        $("#divBook").show();
+                        var items;
+                        $.each(data, function (i, book) {
+                            items += "<option value='" + book.Value + "'>" + book.Text + "</option>";
+                        });
+                        $("#Book").html(items);
+                    } else {
+                        $("#divBook").hide();
+                    }
                 });
             });
         });
@@ -28,19 +34,32 @@
 <h2>CreatePlan</h2>
 @using (@Html.BeginForm("CreatePlan", "GeneratePlan"))
 {
-    @Html.AntiForgeryToken()
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.AntiForgeryToken()
     <div class="container">
         <div class="row">
             <div class="form-group">
-                @Html.LabelFor(c => c.ReadingPlan.Name)
-                @Html.TextBoxFor(c => c.ReadingPlan.Name, new { @class = "form-control" })
+                @Html.LabelFor(c => c.Name)
+                @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+                @*@Html.ValidationMessage("Name", "Please enter student name.", new { @class = "text-danger" })*@
             </div>
         </div>
         <div class="row">
             <div class="form-group">
-                @Html.LabelFor(c => c.ReadingPlan.StartDate)
-                @Html.EditorFor(c => c.ReadingPlan.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.LabelFor(c => c.WeekDayOnly)
+                @Html.EditorFor(c => c.WeekDayOnly)
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(c => c.ChapterPerDay)
+                @Html.EditorFor(c => c.ChapterPerDay, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(c => c.StartDate)
+                @Html.EditorFor(c => c.StartDate, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
         @*<div class="row">
@@ -63,14 +82,14 @@
         <div class="row">
             <div class="form-group">
                 <label for="GroupBook">Group book:</label>
-                <select id="GroupBook" name="GroupBook"></select>
+                <select id="GroupBook" class="form-control" name="GroupBook"></select>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" id="divBook">
             <div class="form-group">
                 <label for="Book">books:</label>
-                <select id="Book" name="Book"></select>
+                <select  class="form-control" id="Book" name="Book"></select>
             </div>
         </div>
 
@@ -81,9 +100,3 @@
         </div>
     </div>    
 }
-
-<script type="text/javascript">
-    function testfunction(value) {
-        alert(value);
-    }
-</script>

@@ -41,34 +41,59 @@ namespace DBReading.Controllers
                 ReadingPlan = readingPlan
             };
             
-            return View(gpVM);
+            return View(readingPlan);
         }
          
 
         [HttpPost]
-        public ActionResult CreatePlan(GeneratePlanViewModel planViewModel, FormCollection form)
+        public ActionResult CreatePlan(ReadingPlan rp, FormCollection form)
         {
 
             if (ModelState.IsValid)
             {
-                switch (planViewModel.DropDownReadingSelected)
+                if(rp.StartDate < DateTime.Now)
                 {
-                    case "Single Book":
-                        return View("CreatePlan", planViewModel);
-                        break;
-                    case "Group Book":
-                        break;
-                    case "New Testatment":
-                        break;
-                    case "Old Testament":
-                        break;
-                    case "Random Books":
-                        break;
-                    case "Other":
-                        break;
-                    default:
-                        CreatePlanForBook(planViewModel);
-                        break;
+                    ModelState.AddModelError(string.Empty, "Date must be today or greater");
+                }
+                else
+                {
+                    GeneratePlanViewModel gpViewModel = new GeneratePlanViewModel
+                    {
+                        ReadingPlan = rp
+                    };
+                    if (rp.ChapterPerDay == 0)
+                        rp.ChapterPerDay = 2;
+
+                    switch (Request.Form["GroupBook"])
+                    {
+                        case "Whole Bible":
+                            CreateWholeBibleReadingPlan();
+                            break;
+                        case "Old Testament":
+                            CreateOldTestamentReadingPlan();
+                            break;
+                        case "New Testament":
+                            CreateNewTestamentReadingPlan();
+                            break;
+                        case "Group Book":
+                            string groupSelect = Request.Form["Book"];
+                            CreateSingleBookReadingPlan();
+                            break;
+                        case "Single Book":
+                            string bookSelected = Request.Form["Book"];
+                            CreateSingleBookReadingPlan(gpViewModel, bookSelected);
+                            break;
+                        case "Random books":
+                            CreateOldTestamentReadingPlan();
+                            break;
+                        case "Other":
+                            CreateOldTestamentReadingPlan();
+                            break;
+
+                        default:
+                            break;
+                    }
+                    
                 }
             }
             // Which type of reading option is selected
@@ -81,7 +106,82 @@ namespace DBReading.Controllers
             //_context.ReadingPlan.Add(reading);
             //_context.SaveChanges();
 
-            return View();
+            return View(rp);
+        }
+
+        private void CreateSingleBookReadingPlan(GeneratePlanViewModel gpViewModel, string book)
+        {
+            BibleBook bk = new BibleBook();
+            var bookMaxChap = _context.BibleBook.Where(x => x.Name == book).Select(x => x.MaxChapter).FirstOrDefault();
+
+            int totalReading;
+            if (bookMaxChap % gpViewModel.ReadingPlan.ChapterPerDay == 0)
+                totalReading = (bookMaxChap / gpViewModel.ReadingPlan.ChapterPerDay);
+            else
+                totalReading = (bookMaxChap / gpViewModel.ReadingPlan.ChapterPerDay) + 1;
+            
+            int fromVerse = 1;
+            int toVerse = 0;
+            string readingPassage;
+            DateTime dteOfReading = gpViewModel.ReadingPlan.StartDate;
+            for (int i = fromVerse; i <= bookMaxChap; i = fromVerse + gpViewModel.ReadingPlan.ChapterPerDay - 1)
+            {
+                toVerse = fromVerse + gpViewModel.ReadingPlan.ChapterPerDay - 1;
+                if (gpViewModel.ReadingPlan.ChapterPerDay == 1)
+                {
+                    readingPassage = string.Format("{0}:{1}", book, fromVerse);
+                }
+                else
+                {
+                    if (fromVerse + gpViewModel.ReadingPlan.ChapterPerDay - 1 <= bookMaxChap)
+                    {
+                        readingPassage = string.Format("{0}:{1}-{2}", book, fromVerse, toVerse);
+                    }
+                    else
+                    {
+                        readingPassage = string.Format("{0}:{1}-{2}", book, fromVerse, bookMaxChap);
+                    }
+
+                    gpViewModel.ReadingAndDate.Add(readingPassage, dteOfReading);
+                    fromVerse += gpViewModel.ReadingPlan.ChapterPerDay;
+                    dteOfReading = gpViewModel.NextWeekDay(dteOfReading);
+                    // Need fix when we have more verse left
+                    if (fromVerse + gpViewModel.ReadingPlan.ChapterPerDay - 1 > bookMaxChap)
+                    {
+                        if (fromVerse == bookMaxChap)
+                        {
+                            readingPassage = string.Format("{0}:{1}", book, fromVerse);
+                            gpViewModel.ReadingAndDate.Add(readingPassage, dteOfReading);
+                        }
+                        else
+                        {
+                            readingPassage = string.Format("{0}:{1}-{2}", book, fromVerse, bookMaxChap);
+                            gpViewModel.ReadingAndDate.Add(readingPassage, dteOfReading);
+                        }
+
+                    }
+                }
+            }
+        }
+
+        private void CreateSingleBookReadingPlan()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CreateWholeBibleReadingPlan()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CreateNewTestamentReadingPlan()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CreateOldTestamentReadingPlan()
+        {
+            throw new NotImplementedException();
         }
 
         public ActionResult CreatePlan2()
@@ -109,29 +209,14 @@ namespace DBReading.Controllers
             IQueryable biblBooks;
             switch (name)
             {
-                case "Whole Bible":
-                    biblBooks = _context.BibleBook.AsQueryable();
-                    break;
-                case "Old Testament":
-                    biblBooks = _context.BibleBook.AsQueryable().Where(x => x.Testament == name);
-                    break;
-                case "New Testament":
-                    biblBooks = _context.BibleBook.AsQueryable().Where(x => x.Testament == name);
-                    break;
                 case "Group Book":
-                    biblBooks = _context.BibleBook.AsQueryable().Where(x => x.ReadingGroupBookID == id);
+                    biblBooks = _context.ReadingGroupBook.AsQueryable();
                     break;
                 case "Single Book":
                     biblBooks = _context.BibleBook.AsQueryable();
                     break;
-                case "Random Books":
-                    biblBooks = _context.BibleBook.AsQueryable();
-                    break;
-                case "Other":
-                    biblBooks = _context.BibleBook.AsQueryable();
-                    break;
                 default:
-                    biblBooks = _context.BibleBook.AsQueryable();
+                    biblBooks = "".AsQueryable();
                     break;
             }
 
@@ -139,7 +224,7 @@ namespace DBReading.Controllers
             {
                 return Json(new SelectList(
                     biblBooks,
-                    "id",
+                    "name",
                     "name"), JsonRequestBehavior.AllowGet
                     );
             }
