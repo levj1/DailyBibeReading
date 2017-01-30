@@ -138,6 +138,39 @@ namespace DBReading.Controllers
 
             return listOfReading;
         }
+
+        //public List<ReadingPlanDetail> CreateReadingPlanForMultipleBooks(List<BibleBook> bibleBook, DateTime startDate)
+        //{
+        //    List<ReadingPlanDetail> listOfReading = new List<ReadingPlanDetail>();
+        //    List<BibleBook> listOfBooks = bibleBook;
+        //    foreach (var book in listOfBooks)
+        //    {
+        //        int fromChap = 1;
+        //        int toChap = 0;
+        //        ReadingPlan read = new ReadingPlan();
+        //        while (fromChap <= book.MaxChapter)
+        //        {
+        //            toChap = fromChap + book.ChapterPerDay - 1;
+        //            if (book.ChapterPerDay == 1)
+        //            {
+        //                listOfReading.Add(new Reading(book.Name, fromChap, fromChap, startDate));
+        //            }
+        //            else if (fromChap + book.ChapterPerDay > book.TotalChapter)
+        //            {
+        //                if (fromChap == book.TotalChapter)
+        //                    listOfReading.Add(new Reading(book.Name, fromChap, fromChap, startDate));
+        //                else
+        //                    listOfReading.Add(new Reading(book.Name, fromChap, book.TotalChapter, startDate));
+        //            }
+        //            else
+        //            {
+        //                listOfReading.Add(new Reading(book.Name, fromChap, toChap, startDate));
+        //            }
+
+        //            fromChap = fromChap + book.ChapterPerDay;
+        //        }
+        //    }
+        //}
                 
         private void CreateWholeBibleReadingPlan()
         {
