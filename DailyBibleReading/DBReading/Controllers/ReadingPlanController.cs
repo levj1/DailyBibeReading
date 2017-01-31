@@ -23,37 +23,37 @@ namespace DBReading.Controllers
         }
 
         // GET: ReadingPlan
-        public ActionResult Index()
-        {
-            GeneratePlanViewModel vm = new GeneratePlanViewModel();
-            string path = @"C:\Users\James Leveille\Documents\GitHub\DailyBibeReading\DailyBibleReading\DBReading\Content\plan1.txt";
-            string line;
-            var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
-            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
-            {
-                while ((line = streamReader.ReadLine()) != null)
-                {
-                    vm.ReadingList = line.Split(';');
-                }
-            }
-            vm.CreateReadingPlan();
+        //public ActionResult Index()
+        //{
+        //    GeneratePlanViewModel vm = new GeneratePlanViewModel();
+        //    string path = @"C:\Users\James Leveille\Documents\GitHub\DailyBibeReading\DailyBibleReading\DBReading\Content\plan1.txt";
+        //    string line;
+        //    var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+        //    using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
+        //    {
+        //        while ((line = streamReader.ReadLine()) != null)
+        //        {
+        //            vm.ReadingList = line.Split(';');
+        //        }
+        //    }
+        //    vm.CreateReadingPlan();
 
-            // Add reading plan to database
-            //_context.ReadingPlan.Add(reading);
-            //_context.SaveChanges();
+        //    // Add reading plan to database
+        //    //_context.ReadingPlan.Add(reading);
+        //    //_context.SaveChanges();
 
-            // Add reading plan detail
-            foreach (var item in vm.ReadingAndDate)
-            {
-                ReadingPlanDetail planDetail = new ReadingPlanDetail();
-                planDetail.ReadingPlanID = vm.ReadingPlan.ID;
-                planDetail.PassageReference = item.Key;
-                planDetail.PassageDate = item.Value;
+        //    // Add reading plan detail
+        //    foreach (var item in vm.ReadingAndDate)
+        //    {
+        //        ReadingPlanDetail planDetail = new ReadingPlanDetail();
+        //        planDetail.ReadingPlanID = vm.ReadingPlan.ID;
+        //        planDetail.PassageReference = item.Key;
+        //        planDetail.PassageDate = item.Value;
 
-                //_context.ReadingPlanDetail.Add(planDetail);
-                //_context.SaveChanges();
-            }
-            return View(vm);
-        }
+        //        //_context.ReadingPlanDetail.Add(planDetail);
+        //        //_context.SaveChanges();
+        //    }
+        //    return View(vm);
+        //}
     }
 }

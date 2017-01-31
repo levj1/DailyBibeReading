@@ -250,6 +250,18 @@
     <Compile Include="Migrations\201701292010219_UpdateReadingPlan.Designer.cs">
       <DependentUpon>201701292010219_UpdateReadingPlan.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701310143543_UpdateReadingDetail.cs" />
+    <Compile Include="Migrations\201701310143543_UpdateReadingDetail.Designer.cs">
+      <DependentUpon>201701310143543_UpdateReadingDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701310147096_AddAnnotationReadingDetail.cs" />
+    <Compile Include="Migrations\201701310147096_AddAnnotationReadingDetail.Designer.cs">
+      <DependentUpon>201701310147096_AddAnnotationReadingDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701310216020_MorePropertiesInReadingPlanDetail.cs" />
+    <Compile Include="Migrations\201701310216020_MorePropertiesInReadingPlanDetail.Designer.cs">
+      <DependentUpon>201701310216020_MorePropertiesInReadingPlanDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BibleApi\BookApi.cs" />
@@ -410,6 +422,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701292010219_UpdateReadingPlan.resx">
       <DependentUpon>201701292010219_UpdateReadingPlan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701310143543_UpdateReadingDetail.resx">
+      <DependentUpon>201701310143543_UpdateReadingDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701310147096_AddAnnotationReadingDetail.resx">
+      <DependentUpon>201701310147096_AddAnnotationReadingDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701310216020_MorePropertiesInReadingPlanDetail.resx">
+      <DependentUpon>201701310216020_MorePropertiesInReadingPlanDetail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
