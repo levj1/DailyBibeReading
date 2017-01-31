@@ -143,6 +143,12 @@ namespace DBReading.Controllers
 
         public void CreateReadingPlanForMultipleBooks(string bookCategoryName, DateTime startDate, int chaptPerday)
         {
+            var sel = _context.BibleBook;
+            List<string> namess = new List<string>();
+            foreach (var item in sel)
+            {
+                namess.Add(item.Name);
+            }
             var bookEntities = _context.BibleBook.Where(x => x.Testament == bookCategoryName);
             string name;
             foreach (var item in bookEntities)

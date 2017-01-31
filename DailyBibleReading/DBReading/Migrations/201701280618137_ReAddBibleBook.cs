@@ -81,7 +81,7 @@ namespace DBReading.Migrations
             Sql("INSERT INTO BibleBooks(name, ReadingGroupBookID, MaxChapter, Testament) values('3 John', 9, 1, 'New Testament')");
             Sql("INSERT INTO BibleBooks(name, ReadingGroupBookID, MaxChapter, Testament) values('Jude', 9, 1, 'New Testament')");
 
-            Sql("INSERT INTO BibleBooks(name, ReadingGroupBookID, MaxChapter, Testament) values('Revelation', 12, 22, 'New Testament')");
+            Sql("INSERT INTO BibleBooks(name, ReadingGroupBookID, MaxChapter, Testament) values('Revelation', 10, 22, 'New Testament')");
         }
         
         public override void Down()
