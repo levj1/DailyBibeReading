@@ -1,6 +1,6 @@
 ﻿@model DBReading.Models.ReadingPlan
 @{
-    ViewBag.Title = "Create Plan";
+    ViewBag.Title = "Create a Bible Plan";
 }
 @section scripts{
     <script type="text/javascript">
@@ -31,7 +31,7 @@
         });
     </script>
 }
-<h2>CreatePlan</h2>
+<h2>Create Plan</h2>
 @using (@Html.BeginForm("CreatePlan", "GeneratePlan"))
 {
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })

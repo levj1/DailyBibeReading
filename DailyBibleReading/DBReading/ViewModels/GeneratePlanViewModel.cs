@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace DBReading.ViewModels
 {
@@ -14,13 +15,17 @@ namespace DBReading.ViewModels
         public Rootobject_Book BibleBooks { get; set; }
         public Rootobject_GroupBook GroupBook { get; set; }
         public ReadingPlan ReadingPlan { get; set; }
+        public ReadingPlanDetail ReadingPlanDetail { get; set; }
+        public List<ReadingPlanDetail> ListOfReading { get; set; }
         public string[] DropDownReadingOption { get; set; }
         public string[] ReadingList { get; set; }
+
 
         public Dictionary<string, DateTime> ReadingAndDate { get; set; }
         public GeneratePlanViewModel()
         {
             ReadingAndDate = new Dictionary<string, DateTime>();
+            ListOfReading = new List<ReadingPlanDetail>();
         }
 
 
@@ -57,28 +62,9 @@ namespace DBReading.ViewModels
             }
             return ReadingAndDate;
         }
-    }
 
-    public class RealBibleBook
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Abbr { get; set; }
-        public string Book_group_id { get; set; }
-        public string Testament { get; set; }
-        public string Osis_end { get; set; }
 
-        public RealBibleBook(string id, string name, string abbr, string bookgroupid, string testatment, string osis_end)
-        {
-            Id = id;
-            Name = name;
-            Abbr = abbr;
-            Book_group_id = bookgroupid;
-            Testament = testatment;
-            Osis_end = osis_end;
-        }
-        public RealBibleBook()
-        {
+
         }
     }
-}
+    

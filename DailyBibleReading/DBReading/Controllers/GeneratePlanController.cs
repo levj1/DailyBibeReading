@@ -47,12 +47,12 @@ namespace DBReading.Controllers
          
 
         [HttpPost]
-        public ActionResult CreatePlan(ReadingPlan rp, FormCollection form)
+        public ActionResult CreatePlan(ReadingPlan readingPlan, FormCollection form)
         {
 
             if (ModelState.IsValid)
             {
-                if(rp.StartDate < DateTime.Now)
+                if(readingPlan.StartDate < DateTime.Now)
                 {
                     ModelState.AddModelError(string.Empty, "Date must be today or greater");
                 }
@@ -60,48 +60,49 @@ namespace DBReading.Controllers
                 {
                     GeneratePlanViewModel gpViewModel = new GeneratePlanViewModel
                     {
-                        ReadingPlan = rp
+                        ReadingPlan = readingPlan
                     };
-                    if (rp.ChapterPerDay == 0)
-                        rp.ChapterPerDay = 2;
+                    if (readingPlan.ChapterPerDay == 0)
+                        readingPlan.ChapterPerDay = 2;
 
                     string groupBookSelected = Request.Form["GroupBook"];
                     string bookSelected = Request.Form["Book"];
                     switch (groupBookSelected)
                     {
                         case "Whole Bible":
-                            CreateWholeBibleReadingPlan();
+                            var wholeBibleBooks = _context.BibleBook;
+                            CreateReadingPlanForMultipleBooks(wholeBibleBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
                             break;
                         case "Old Testament":
-                            CreateReadingPlanForMultipleBooks(bookSelected, DateTime.Now, gpViewModel.ReadingPlan.ChapterPerDay);
+                            var oldTestamentBooks = _context.BibleBook.Where(x => x.Testament == "Old Testament");
+                            CreateReadingPlanForMultipleBooks(oldTestamentBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
                             break;
                         case "New Testament":
-                            CreateNewTestamentReadingPlan();
+                            var newTestamentBooks = _context.BibleBook.Where(x => x.Testament == "New Testament");
+                            CreateReadingPlanForMultipleBooks(newTestamentBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
                             break;
                         case "Group Book":
                             string groupSelect = Request.Form["Book"];
+                            var sectionBooks = _context.BibleBook.Where(x => x.ReadingGroupBook.Name == groupSelect);
+                            CreateReadingPlanForMultipleBooks(sectionBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
                             break;
                         case "Single Book":
-                            List<ReadingPlanDetail> listPlanDetail = CreateSingleBookReadingPlan(bookSelected, gpViewModel.ReadingPlan.ChapterPerDay, gpViewModel.ReadingPlan.StartDate, gpViewModel);
-                            SaveSingleBookPlan(rp.ID, listPlanDetail);
-                            break;
-                        case "Random books":
-                            CreateOldTestamentReadingPlan();
+                            List<ReadingPlanDetail> listPlanDetail = CreateSingleBookReadingPlan(bookSelected, gpViewModel.ReadingPlan.ChapterPerDay, gpViewModel.ReadingPlan.StartDate, gpViewModel);                            
                             break;
                         case "Other":
-                            CreateOldTestamentReadingPlan();
                             break;
 
                         default:
                             break;
                     }
-                    
+                    return View("CreatePlanResult", gpViewModel);
+
                 }
             }
 
-            return View(rp);
+            return View(readingPlan);
         }
-
+        
         private void SaveSingleBookPlan(int p, List<ReadingPlanDetail> listPlanDetail)
         {
             throw new NotImplementedException();
@@ -109,6 +110,8 @@ namespace DBReading.Controllers
 
         public List<ReadingPlanDetail> CreateSingleBookReadingPlan(string name, int chapPerDay, DateTime startDate, GeneratePlanViewModel gpVM)
         {
+            if (gpVM.ReadingPlan.ChapterPerDay == 0)
+                gpVM.ReadingPlan.ChapterPerDay = 2;
             var totalChap = _context.BibleBook.Where(x => x.Name == name).Select(x => x.MaxChapter).FirstOrDefault();
 
             int fromChap = 1;
@@ -135,74 +138,58 @@ namespace DBReading.Controllers
                 }
 
                 fromChap = fromChap + chapPerDay;
-                startDate = gpVM.NextWeekDay(startDate);
+                gpVM.ReadingPlan.EndDate = startDate;
+                if (gpVM.ReadingPlan.WeekDayOnly)
+                    startDate = gpVM.NextWeekDay(startDate);
+                else
+                    startDate = startDate.AddDays(1);
             }
-
+            gpVM.ListOfReading = listOfReading;
             return listOfReading;
         }
-
-        public void CreateReadingPlanForMultipleBooks(string bookCategoryName, DateTime startDate, int chaptPerday)
+        
+        public void CreateReadingPlanForMultipleBooks(IQueryable<BibleBook> books, DateTime startDate, int chapterPerDay, GeneratePlanViewModel gpVM)
         {
-            var sel = _context.BibleBook;
-            List<string> namess = new List<string>();
-            foreach (var item in sel)
+            if (gpVM.ReadingPlan.ChapterPerDay == 0)
+                gpVM.ReadingPlan.ChapterPerDay = 2;
+
+            List<ReadingPlanDetail> listOfReading = new List<ReadingPlanDetail>();
+            foreach (var book in books)
             {
-                namess.Add(item.Name);
+                int fromChapter = 1;
+                int toChapter = 0;
+                ReadingPlan read = new ReadingPlan();
+                while (fromChapter <= book.MaxChapter)
+                {
+                    toChapter = fromChapter + chapterPerDay - 1;
+                    if (book.MaxChapter == 1)
+                    {
+                        listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, fromChapter, startDate));
+                    }
+                    else if (fromChapter + chapterPerDay > book.MaxChapter)
+                    {
+                        if (fromChapter == book.MaxChapter)
+                            listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, fromChapter, startDate));
+                        else
+                            listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, book.MaxChapter, startDate));
+                    }
+                    else
+                    {
+                        listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, toChapter, startDate));
+                    }
+
+                    fromChapter = fromChapter + chapterPerDay;
+                    if (gpVM.ReadingPlan.WeekDayOnly)
+                        startDate = gpVM.NextWeekDay(startDate);
+                    else
+                        startDate = startDate.AddDays(1);
+                }
+
             }
-            var bookEntities = _context.BibleBook.Where(x => x.Testament == bookCategoryName);
-            string name;
-            foreach (var item in bookEntities)
-            {
-                name = item.Name;
-            }
-            //List<ReadingPlanDetail> listOfReading = new List<ReadingPlanDetail>();
-            //List<BibleBook> listOfBooks = bibleBook;
-            //foreach (var book in listOfBooks)
-            //{
-            //    int fromChap = 1;
-            //    int toChap = 0;
-            //    ReadingPlan read = new ReadingPlan();
-            //    while (fromChap <= book.MaxChapter)
-            //    {
-            //        toChap = fromChap + chaptPerday - 1;
-            //        if (book.MaxChapter == 1)
-            //        {
-            //            listOfReading.Add(new ReadingPlanDetail(book.Name, fromChap, fromChap, startDate));
-            //        }
-            //        else if (fromChap + chaptPerday > book.MaxChapter)
-            //        {
-            //            if (fromChap == book.MaxChapter)
-            //                listOfReading.Add(new ReadingPlanDetail(book.Name, fromChap, fromChap, startDate));
-            //            else
-            //                listOfReading.Add(new ReadingPlanDetail(book.Name, fromChap, book.MaxChapter, startDate));
-            //        }
-            //        else
-            //        {
-            //            listOfReading.Add(new ReadingPlanDetail(book.Name, fromChap, toChap, startDate));
-            //        }
-
-            //        fromChap = fromChap + chaptPerday;
-            //        startDate = gpVM.NextWeekDay(startDate);
-            //    }
-            //}
-
-            //return listOfReading;
+            gpVM.ListOfReading = listOfReading;
         }
 
-        private void CreateWholeBibleReadingPlan()
-        {
-            throw new NotImplementedException();
-        }
 
-        private void CreateNewTestamentReadingPlan()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void CreateOldTestamentReadingPlan()
-        {
-            throw new NotImplementedException();
-        }
 
         public ActionResult CreatePlan2()
         {
@@ -302,45 +289,6 @@ namespace DBReading.Controllers
             }
             await Task.Delay(10000);
             return bibleGroupBook;
-        }
-
-        private static void CreatePlanForBook(GeneratePlanViewModel planViewModel)
-        {
-            string book = planViewModel.ReadingPlan.SelectedReadingOption.ToString(); //eng-NASB:Gen.50.26
-            if (!string.IsNullOrWhiteSpace(book))
-            {
-                int chapterPerDay = 2;
-                string[] returnValue = book.Split('.');
-                int numbOfChap = Convert.ToInt32(returnValue[1]);
-                string book_id = returnValue[0].ToString();
-                string version = book_id.Split(':')[0];
-                string bookName = book_id.Split(':')[1];
-                int arrLen;
-                if (numbOfChap % 2 == 0)
-                    arrLen = Convert.ToInt32(numbOfChap / 2);
-                else
-                    arrLen = Convert.ToInt32(numbOfChap / 2) + 1;
-                string[] readingList = new string[arrLen];
-
-                int fromVerse = 1;
-                string readingPassage;
-                DateTime dteOfReading = planViewModel.ReadingPlan.StartDate;
-                for (int i = 0; i < arrLen; i++)
-                {
-                    if (fromVerse + 1 < numbOfChap)
-                    {
-                        readingPassage = string.Format("{0}:{1}-{2}", bookName, fromVerse, fromVerse + 1);
-                    }
-                    else
-                    {
-                        readingPassage = string.Format("{0}:{1}", bookName, fromVerse);
-                    }
-
-                    planViewModel.ReadingAndDate.Add(readingPassage, dteOfReading);
-                    fromVerse += 2;
-                    dteOfReading = planViewModel.NextWeekDay(dteOfReading);
-                }
-            }
         }
     }
 }

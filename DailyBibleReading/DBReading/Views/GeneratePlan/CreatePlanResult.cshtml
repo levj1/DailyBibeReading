@@ -1,8 +1,33 @@
 ﻿@model DBReading.ViewModels.GeneratePlanViewModel
 @{
-    ViewBag.Title = "CreatePlanResult";
+    ViewBag.Title = "Bible Reading Plan Detail";
 }
 
-<h2>Plan Created</h2>
+<h2>You Successfully Created a reading plan</h2>
 
-<p>You plan has been created</p>
+<p></p>
+<div class="row">
+    <b>Name:</b> @Model.ReadingPlan.Name <br />
+    <b>Start Date:</b> @Model.ReadingPlan.StartDate.ToString("d") <br />
+    <b>End Date:</b> @Model.ReadingPlan.EndDate.ToString("d") <br />
+    <b>Chapter per day:</b> @Model.ReadingPlan.ChapterPerDay 
+</div>
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Reading Passage</th>
+                <th>Reading Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var plan in Model.ListOfReading)
+            {
+                <tr>
+                    <td>@plan.PassageReference</td>
+                    <td>@plan.ReadingDate.ToString("d")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ApiCalls.GroupBook;
 using System.IO;
+using DBReading;
+using DBReading.Models;
 
 namespace ApiCalls
 {
@@ -24,6 +26,70 @@ namespace ApiCalls
         static string _token = "hCqGoQYlBorqkIyQnjpMSlqzx1Q1YEAUZaJMCrXN";
 
         static void Main(string[] args)
+        {
+            int chapterPerDay = 2;
+            DateTime startDate = DateTime.Now;
+
+            List<ReadingPlanDetail> listOfReading = new List<ReadingPlanDetail>();
+            List<BibleBook> listOfBooks = GetListBooks();
+            foreach (var book in listOfBooks)
+            {
+                int fromChapter = 1;
+                int toChapter = 0;
+                ReadingPlan read = new ReadingPlan();
+                while (fromChapter <= book.MaxChapter)
+                {
+                    toChapter = fromChapter + chapterPerDay - 1;
+                    if (book.MaxChapter == 1)
+                    {
+                        listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, fromChapter, startDate));
+                    }
+                    else if (fromChapter + chapterPerDay > book.MaxChapter)
+                    {
+                        if (fromChapter == book.MaxChapter)
+                            listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, fromChapter, startDate));
+                        else
+                            listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, book.MaxChapter, startDate));
+                    }
+                    else
+                    {
+                        listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, toChapter, startDate));
+                    }
+
+                    fromChapter = fromChapter + chapterPerDay;
+                    startDate = NextWeekDay(startDate);
+                }
+            }
+
+            foreach (var item in listOfReading)
+            {
+                Console.WriteLine(item.PassageReference);
+            }
+
+            Console.ReadLine();
+            
+        }
+
+        public static DateTime NextWeekDay(DateTime date)
+        {
+            date = date.AddDays(1);
+            while (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+            {
+                date = date.AddDays(1);
+            }
+            return date;
+        }
+
+        public static List<BibleBook> GetListBooks()
+        {
+            return new List<BibleBook>
+            {
+                new BibleBook {Name = "Genesis", MaxChapter = 10 },
+                new BibleBook {Name = "Exodus", MaxChapter = 11 }
+            };
+        }
+
+        private static void ApiMethod()
         {
             string line = "";
             List<string> readdingList = new List<string>();
