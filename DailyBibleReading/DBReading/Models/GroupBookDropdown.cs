@@ -16,7 +16,7 @@ namespace DBReading.Models
             {
                 new GroupBookDropdown
                 {
-                    ID = 1, Name = "Whole Bibe"
+                    ID = 1, Name = "Whole Bible"
                 },
                 new GroupBookDropdown
                 {

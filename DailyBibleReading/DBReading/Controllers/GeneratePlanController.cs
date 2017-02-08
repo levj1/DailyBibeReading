@@ -69,22 +69,22 @@ namespace DBReading.Controllers
                     string bookSelected = Request.Form["Book"];
                     switch (groupBookSelected)
                     {
-                        case "Whole Bible":
+                        case "Whole Bibe":
                             var wholeBibleBooks = _context.BibleBook;
-                            CreateReadingPlanForMultipleBooks(wholeBibleBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
+                            CreateBibleReadingPlan(wholeBibleBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
                             break;
                         case "Old Testament":
                             var oldTestamentBooks = _context.BibleBook.Where(x => x.Testament == "Old Testament");
-                            CreateReadingPlanForMultipleBooks(oldTestamentBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
+                            CreateBibleReadingPlan(oldTestamentBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
                             break;
                         case "New Testament":
                             var newTestamentBooks = _context.BibleBook.Where(x => x.Testament == "New Testament");
-                            CreateReadingPlanForMultipleBooks(newTestamentBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
+                            CreateBibleReadingPlan(newTestamentBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
                             break;
                         case "Group Book":
                             string groupSelect = Request.Form["Book"];
                             var sectionBooks = _context.BibleBook.Where(x => x.ReadingGroupBook.Name == groupSelect);
-                            CreateReadingPlanForMultipleBooks(sectionBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
+                            CreateBibleReadingPlan(sectionBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
                             break;
                         case "Single Book":
                             List<ReadingPlanDetail> listPlanDetail = CreateSingleBookReadingPlan(bookSelected, gpViewModel.ReadingPlan.ChapterPerDay, gpViewModel.ReadingPlan.StartDate, gpViewModel);                            
@@ -148,44 +148,88 @@ namespace DBReading.Controllers
             return listOfReading;
         }
         
-        public void CreateReadingPlanForMultipleBooks(IQueryable<BibleBook> books, DateTime startDate, int chapterPerDay, GeneratePlanViewModel gpVM)
+        public void CreateBibleReadingPlan(IQueryable<BibleBook> books, DateTime startDate, int chapterPerDay, GeneratePlanViewModel gpVM)
         {
             if (gpVM.ReadingPlan.ChapterPerDay == 0)
                 gpVM.ReadingPlan.ChapterPerDay = 2;
 
+            List<BibleBook> listOfBooks = books.ToList();
             List<ReadingPlanDetail> listOfReading = new List<ReadingPlanDetail>();
-            foreach (var book in books)
+            int fromChapter = 1;
+            int toChapter = 0;
+            int tallyNumberReading = 0;
+            int leftCapacity = 0;
+            foreach (var book in listOfBooks)
             {
-                int fromChapter = 1;
-                int toChapter = 0;
-                ReadingPlan read = new ReadingPlan();
+                fromChapter = 1;
+                toChapter = 0;
+
                 while (fromChapter <= book.MaxChapter)
                 {
                     toChapter = fromChapter + chapterPerDay - 1;
-                    if (book.MaxChapter == 1)
+                    // Test data
+                    if (leftCapacity > 0)
+                    {
+                        // see if next book has capacity
+                        if (book.MaxChapter >= leftCapacity)
+                        {
+                            listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, leftCapacity, startDate));
+                            fromChapter = leftCapacity + 1;
+                            tallyNumberReading = 0;
+                            leftCapacity = 0;
+                            startDate = gpVM.NextWeekDay(startDate);
+                            continue;
+                        }
+                        else
+                        {
+                            listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, book.MaxChapter, startDate));
+                            tallyNumberReading += book.MaxChapter - fromChapter + 1;
+                            leftCapacity += chapterPerDay - tallyNumberReading;
+                            fromChapter += book.MaxChapter - fromChapter + 1;
+                            continue;
+                        }
+                    }
+                    // End test
+
+                    if (chapterPerDay == 1)
                     {
                         listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, fromChapter, startDate));
+                        tallyNumberReading += 1;
+                        leftCapacity += chapterPerDay - tallyNumberReading;
                     }
                     else if (fromChapter + chapterPerDay > book.MaxChapter)
                     {
                         if (fromChapter == book.MaxChapter)
+                        {
                             listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, fromChapter, startDate));
+                            tallyNumberReading += 1;
+                            leftCapacity += chapterPerDay - tallyNumberReading;
+                        }
                         else
+                        {
                             listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, book.MaxChapter, startDate));
+                            tallyNumberReading += book.MaxChapter - fromChapter + 1;
+                            leftCapacity += chapterPerDay - tallyNumberReading;
+                        }
                     }
                     else
                     {
                         listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, toChapter, startDate));
+                        tallyNumberReading = 0;
+                        leftCapacity = 0;
                     }
 
                     fromChapter = fromChapter + chapterPerDay;
-                    if (gpVM.ReadingPlan.WeekDayOnly)
-                        startDate = gpVM.NextWeekDay(startDate);
-                    else
-                        startDate = startDate.AddDays(1);
-                }
 
+                    if (leftCapacity <= 0)
+                    {
+                        startDate = gpVM.NextWeekDay(startDate);
+                        tallyNumberReading = 0;
+                        leftCapacity = 0;
+                    }
+                }
             }
+            gpVM.ReadingPlan.EndDate = listOfReading[listOfReading.Count - 1].ReadingDate;
             gpVM.ListOfReading = listOfReading;
         }
 

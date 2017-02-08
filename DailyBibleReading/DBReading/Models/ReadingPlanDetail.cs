@@ -34,7 +34,14 @@ namespace DBReading.Models
                 return output;
             }
         }
-        
+        public int TotalChapter
+        {
+            get
+            {
+                return EndVerse - StartVerse + 1;
+            }
+        }
+
         [StringLength(30)]
         public string BookName { get; set; }
         public int StartVerse { get; set; }

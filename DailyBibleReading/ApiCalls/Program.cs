@@ -27,24 +27,32 @@ namespace ApiCalls
 
         static void Main(string[] args)
         {
-            int chapterPerDay = 2;
+            AddReadingForMultipleBooks();
+
+            Console.ReadLine();
+            
+        }
+
+        private static void AddReadingForMultipleBooks()
+        {
+            int chapPerDay = 5;
+            List<ReadingPlanDetail> listOfReading = new List<ReadingPlanDetail>();
+            List<BibleBook> listOfBooks = GetBookList();
             DateTime startDate = DateTime.Now;
 
-            List<ReadingPlanDetail> listOfReading = new List<ReadingPlanDetail>();
-            List<BibleBook> listOfBooks = GetListBooks();
+            int fromChapter = 1;
+            int bookNumber = 0;
+            int readingNumber = 0;
             foreach (var book in listOfBooks)
             {
-                int fromChapter = 1;
-                int toChapter = 0;
-                ReadingPlan read = new ReadingPlan();
                 while (fromChapter <= book.MaxChapter)
                 {
-                    toChapter = fromChapter + chapterPerDay - 1;
-                    if (book.MaxChapter == 1)
+                    fromChapter = fromChapter + chapPerDay - 1;
+                    if (chapPerDay == 1)
                     {
                         listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, fromChapter, startDate));
                     }
-                    else if (fromChapter + chapterPerDay > book.MaxChapter)
+                    else if (fromChapter + chapPerDay > book.MaxChapter)
                     {
                         if (fromChapter == book.MaxChapter)
                             listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, fromChapter, startDate));
@@ -53,23 +61,63 @@ namespace ApiCalls
                     }
                     else
                     {
-                        listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, toChapter, startDate));
+                        listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, fromChapter, startDate));
                     }
-
-                    fromChapter = fromChapter + chapterPerDay;
                     startDate = NextWeekDay(startDate);
+                    fromChapter = fromChapter + chapPerDay;
                 }
+                int numChapLastReading = listOfReading[listOfReading.Count - 1].TotalChapter;
+                int leftOverChapter = chapPerDay - (listOfReading[listOfReading.Count - 1].EndVerse - listOfReading[listOfReading.Count - 1].StartVerse + 1);
+                DateTime lastReadingDte = listOfReading[listOfReading.Count - 1].ReadingDate;
+
+                int numChapNextReading = listOfBooks[bookNumber].MaxChapter;
+
+                // add next reading if total chapter for the previous reading is less then the number chapter of the day. 
+                if (readingNumber < listOfBooks.Count - 1 && numChapLastReading < chapPerDay)
+                {
+                    //Console.WriteLine("Currently have chapter: {0} left over: {1} Date: {2}", numChapLastReading, leftOverChapter, lastReadingDte);
+                    //Console.WriteLine(" --- Next reading date ---");
+                    //Console.WriteLine("Currently have chapter: {0} left over: {1} Date: {2}", numChapNextReading, 0, 0);
+
+                    if (numChapNextReading >= leftOverChapter)
+                    {
+                        listOfReading.Add(new ReadingPlanDetail(listOfBooks[bookNumber + 1].Name, 1, leftOverChapter, lastReadingDte));
+                        fromChapter = leftOverChapter + 1;
+                    }
+                    else
+                    {
+                        listOfReading.Add(new ReadingPlanDetail(listOfBooks[bookNumber + 1].Name, 1, numChapNextReading, lastReadingDte));
+                        fromChapter = numChapNextReading + 1;
+                    }
+                }
+                else
+                {
+                    fromChapter = 1;
+                }
+                readingNumber++;
+                bookNumber++;
             }
 
-            foreach (var item in listOfReading)
+            //List<Reading> returnValue = new List<Reading>();
+            //returnValue = CreateReadingForABook("Book1", 150, 5, DateTime.Now);
+
+            foreach (var reading in listOfReading)
             {
-                Console.WriteLine(item.PassageReference);
+                Console.WriteLine(string.Format("\t{0}  \t{1}", reading.PassageReference, reading.ReadingDate.ToString()));
             }
-
-            Console.ReadLine();
-            
         }
 
+        public static List<BibleBook> GetBookList()
+        {
+            return new List<BibleBook>
+            {
+                new BibleBook {Name = "Genesis", MaxChapter = 2 },
+                new BibleBook {Name = "Exodus", MaxChapter = 1 },
+                new BibleBook {Name = "Leveticus", MaxChapter = 2 },
+                new BibleBook {Name = "Deut", MaxChapter = 2 },
+                new BibleBook {Name = "Judges", MaxChapter = 2 }
+            };
+        }
         public static DateTime NextWeekDay(DateTime date)
         {
             date = date.AddDays(1);
@@ -80,14 +128,6 @@ namespace ApiCalls
             return date;
         }
 
-        public static List<BibleBook> GetListBooks()
-        {
-            return new List<BibleBook>
-            {
-                new BibleBook {Name = "Genesis", MaxChapter = 10 },
-                new BibleBook {Name = "Exodus", MaxChapter = 11 }
-            };
-        }
 
         private static void ApiMethod()
         {
