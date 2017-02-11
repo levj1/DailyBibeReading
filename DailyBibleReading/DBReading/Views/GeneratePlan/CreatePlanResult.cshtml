@@ -1,6 +1,7 @@
 ﻿@model DBReading.ViewModels.GeneratePlanViewModel
 @{
     ViewBag.Title = "Bible Reading Plan Detail";
+    DateTime thisDate = DateTime.Now.AddYears(-1);
 }
 
 <h2>You Successfully Created a reading plan</h2>
@@ -24,8 +25,23 @@
             @foreach (var plan in Model.ListOfReading)
             {
                 <tr>
-                    <td>@plan.PassageReference</td>
-                    <td>@plan.ReadingDate.ToString("d")</td>
+                    <td>
+                        @foreach (var item in Model.ListOfReading)
+                        {
+                            if (plan.ReadingDate == item.ReadingDate && plan.ReadingDate != thisDate)
+                            {
+                                @item.PassageReference <br />
+                            }
+                        }
+                    </td>
+                    <td>
+                        @if (plan.ReadingDate != thisDate)
+                        {
+                            @plan.ReadingDate.ToString("d")
+                        }
+                       thisDate = plan.ReadingDate 
+                    </td>
+                    
                 </tr>
             }
         </tbody>

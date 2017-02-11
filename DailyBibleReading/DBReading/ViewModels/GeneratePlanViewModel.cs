@@ -17,6 +17,7 @@ namespace DBReading.ViewModels
         public ReadingPlan ReadingPlan { get; set; }
         public ReadingPlanDetail ReadingPlanDetail { get; set; }
         public List<ReadingPlanDetail> ListOfReading { get; set; }
+        public List<ReadingPlanDetail> ListOfReadingByDate { get; set; }
         public string[] DropDownReadingOption { get; set; }
         public string[] ReadingList { get; set; }
 
@@ -26,6 +27,13 @@ namespace DBReading.ViewModels
         {
             ReadingAndDate = new Dictionary<string, DateTime>();
             ListOfReading = new List<ReadingPlanDetail>();
+            ListOfReadingByDate = new List<ReadingPlanDetail>();
+
+            DateTime thisDate = DateTime.Now.AddYears(-1);
+            foreach (var item in ListOfReading)
+            {
+
+            }
         }
 
 
@@ -62,6 +70,8 @@ namespace DBReading.ViewModels
             }
             return ReadingAndDate;
         }
+
+
 
 
 

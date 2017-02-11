@@ -167,6 +167,12 @@ namespace DBReading.Controllers
                 while (fromChapter <= book.MaxChapter)
                 {
                     toChapter = fromChapter + chapterPerDay - 1;
+                    if (leftCapacity <= 0 || tallyNumberReading >= chapterPerDay)
+                    {
+                        startDate = gpVM.NextWeekDay(startDate);
+                        tallyNumberReading = 0;
+                        leftCapacity = 0;
+                    }
                     // Test data
                     if (leftCapacity > 0)
                     {
@@ -184,7 +190,7 @@ namespace DBReading.Controllers
                         {
                             listOfReading.Add(new ReadingPlanDetail(book.Name, fromChapter, book.MaxChapter, startDate));
                             tallyNumberReading += book.MaxChapter - fromChapter + 1;
-                            leftCapacity += chapterPerDay - tallyNumberReading;
+                            leftCapacity = chapterPerDay - tallyNumberReading;
                             fromChapter += book.MaxChapter - fromChapter + 1;
                             continue;
                         }
@@ -220,13 +226,6 @@ namespace DBReading.Controllers
                     }
 
                     fromChapter = fromChapter + chapterPerDay;
-
-                    if (leftCapacity <= 0)
-                    {
-                        startDate = gpVM.NextWeekDay(startDate);
-                        tallyNumberReading = 0;
-                        leftCapacity = 0;
-                    }
                 }
             }
             gpVM.ReadingPlan.EndDate = listOfReading[listOfReading.Count - 1].ReadingDate;
