@@ -67,27 +67,29 @@ namespace DBReading.Controllers
 
                     string groupBookSelected = Request.Form["GroupBook"];
                     string bookSelected = Request.Form["Book"];
+                    bool dayOption = readingPlan.WeekDayOnly;
                     switch (groupBookSelected)
                     {
-                        case "Whole Bibe":
+                        case "Whole Bible":
                             var wholeBibleBooks = _context.BibleBook;
-                            CreateBibleReadingPlan(wholeBibleBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
+                            CreateBibleReadingPlan(wholeBibleBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);
                             break;
                         case "Old Testament":
                             var oldTestamentBooks = _context.BibleBook.Where(x => x.Testament == "Old Testament");
-                            CreateBibleReadingPlan(oldTestamentBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
+                            CreateBibleReadingPlan(oldTestamentBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);
                             break;
                         case "New Testament":
                             var newTestamentBooks = _context.BibleBook.Where(x => x.Testament == "New Testament");
-                            CreateBibleReadingPlan(newTestamentBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
+                            CreateBibleReadingPlan(newTestamentBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);
                             break;
                         case "Group Book":
                             string groupSelect = Request.Form["Book"];
                             var sectionBooks = _context.BibleBook.Where(x => x.ReadingGroupBook.Name == groupSelect);
-                            CreateBibleReadingPlan(sectionBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel);
+                            CreateBibleReadingPlan(sectionBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);
                             break;
                         case "Single Book":
-                            List<ReadingPlanDetail> listPlanDetail = CreateSingleBookReadingPlan(bookSelected, gpViewModel.ReadingPlan.ChapterPerDay, gpViewModel.ReadingPlan.StartDate, gpViewModel);                            
+                            var singleBook = _context.BibleBook.Where(x => x.Name == bookSelected);
+                            CreateBibleReadingPlan(singleBook, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);                            
                             break;
                         case "Other":
                             break;
@@ -108,7 +110,7 @@ namespace DBReading.Controllers
             throw new NotImplementedException();
         }
 
-        public List<ReadingPlanDetail> CreateSingleBookReadingPlan(string name, int chapPerDay, DateTime startDate, GeneratePlanViewModel gpVM)
+        public List<ReadingPlanDetail> CreateSingleBookReadingPlan(string name, int chapPerDay, DateTime startDate, GeneratePlanViewModel gpVM, bool isWeekDayOnly)
         {
             if (gpVM.ReadingPlan.ChapterPerDay == 0)
                 gpVM.ReadingPlan.ChapterPerDay = 2;
@@ -140,7 +142,7 @@ namespace DBReading.Controllers
                 fromChap = fromChap + chapPerDay;
                 gpVM.ReadingPlan.EndDate = startDate;
                 if (gpVM.ReadingPlan.WeekDayOnly)
-                    startDate = gpVM.NextWeekDay(startDate);
+                    startDate = gpVM.NextReadingDate(startDate, isWeekDayOnly);
                 else
                     startDate = startDate.AddDays(1);
             }
@@ -148,11 +150,16 @@ namespace DBReading.Controllers
             return listOfReading;
         }
         
-        public void CreateBibleReadingPlan(IQueryable<BibleBook> books, DateTime startDate, int chapterPerDay, GeneratePlanViewModel gpVM)
+        public void CreateBibleReadingPlan(IQueryable<BibleBook> books, DateTime startDate, int chapterPerDay, GeneratePlanViewModel gpVM, bool weedDayOnly)
         {
             if (gpVM.ReadingPlan.ChapterPerDay == 0)
                 gpVM.ReadingPlan.ChapterPerDay = 2;
-
+            if (weedDayOnly == true && (startDate.DayOfWeek == DayOfWeek.Saturday || startDate.DayOfWeek == DayOfWeek.Sunday))
+            {
+                startDate = gpVM.NextReadingDate(startDate, weedDayOnly);
+            }
+            try
+            {
             List<BibleBook> listOfBooks = books.ToList();
             List<ReadingPlanDetail> listOfReading = new List<ReadingPlanDetail>();
             int fromChapter = 1;
@@ -169,7 +176,7 @@ namespace DBReading.Controllers
                     toChapter = fromChapter + chapterPerDay - 1;
                     if (leftCapacity <= 0 || tallyNumberReading >= chapterPerDay)
                     {
-                        startDate = gpVM.NextWeekDay(startDate);
+                        startDate = gpVM.NextReadingDate(startDate, weedDayOnly);
                         tallyNumberReading = 0;
                         leftCapacity = 0;
                     }
@@ -183,7 +190,7 @@ namespace DBReading.Controllers
                             fromChapter = leftCapacity + 1;
                             tallyNumberReading = 0;
                             leftCapacity = 0;
-                            startDate = gpVM.NextWeekDay(startDate);
+                            startDate = gpVM.NextReadingDate(startDate, weedDayOnly);
                             continue;
                         }
                         else
@@ -228,8 +235,15 @@ namespace DBReading.Controllers
                     fromChapter = fromChapter + chapterPerDay;
                 }
             }
+
             gpVM.ReadingPlan.EndDate = listOfReading[listOfReading.Count - 1].ReadingDate;
             gpVM.ListOfReading = listOfReading;
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
 

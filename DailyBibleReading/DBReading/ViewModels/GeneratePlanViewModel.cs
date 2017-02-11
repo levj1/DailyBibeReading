@@ -25,7 +25,6 @@ namespace DBReading.ViewModels
         public Dictionary<string, DateTime> ReadingAndDate { get; set; }
         public GeneratePlanViewModel()
         {
-            ReadingAndDate = new Dictionary<string, DateTime>();
             ListOfReading = new List<ReadingPlanDetail>();
             ListOfReadingByDate = new List<ReadingPlanDetail>();
 
@@ -37,43 +36,23 @@ namespace DBReading.ViewModels
         }
 
 
-        public DateTime NextWeekDay(DateTime date)
+        public DateTime NextReadingDate(DateTime date, bool isWeekDayOnly )
         {
-            date = date.AddDays(1);
-            while (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+            if (isWeekDayOnly)
+            {
+                date = date.AddDays(1);
+                while (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    date = date.AddDays(1);
+                }
+            }
+            else
             {
                 date = date.AddDays(1);
             }
+            
             return date;
         }
-
-        public Dictionary<string, DateTime> CreateReadingPlan()
-        {
-            if (ReadingPlan.StartDate == null || ReadingPlan.StartDate.Year == 1)
-            {
-                ReadingPlan.StartDate = DateTime.Now;
-            }
-            for (int i = 0; i < ReadingList.Length; i++)
-            {
-                if (i == 0)
-                {
-                    ReadingAndDate.Add(ReadingList[i], ReadingPlan.StartDate.AddDays(i));
-                }
-                else
-                {
-                    ReadingAndDate.Add(ReadingList[i], NextWeekDay(ReadingPlan.StartDate.AddDays(i - 1)));
-                }
-                if (i == ReadingAndDate.Count - 1)
-                {
-                    ReadingPlan.EndDate = NextWeekDay(ReadingPlan.StartDate.AddDays(i - 1));
-                }
-            }
-            return ReadingAndDate;
-        }
-
-
-
-
 
         }
     }

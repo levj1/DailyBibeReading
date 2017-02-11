@@ -8,10 +8,20 @@
 
 <p></p>
 <div class="row">
-    <b>Name:</b> @Model.ReadingPlan.Name <br />
-    <b>Start Date:</b> @Model.ReadingPlan.StartDate.ToString("d") <br />
-    <b>End Date:</b> @Model.ReadingPlan.EndDate.ToString("d") <br />
-    <b>Chapter per day:</b> @Model.ReadingPlan.ChapterPerDay 
+    <ul class="list-group">
+        <li class="list-group-item">
+            <b>Name:</b> @Model.ReadingPlan.Name
+        </li>
+        <li class="list-group-item">
+            <b>Start Date:</b> @Model.ReadingPlan.StartDate.ToString("d")
+        </li>
+        <li class="list-group-item">
+            <b>End Date:</b> @Model.ReadingPlan.EndDate.ToString("d")
+        </li>
+        <li class="list-group-item">
+            <b>Chapter per day:</b> @Model.ReadingPlan.ChapterPerDay            
+        </li>
+    </ul>
 </div>
 <div class="row">
     <table class="table">
@@ -24,6 +34,8 @@
         <tbody>
             @foreach (var plan in Model.ListOfReading)
             {
+                if (plan.ReadingDate != thisDate)
+                {
                 <tr>
                     <td>
                         @foreach (var item in Model.ListOfReading)
@@ -35,14 +47,12 @@
                         }
                     </td>
                     <td>
-                        @if (plan.ReadingDate != thisDate)
-                        {
-                            @plan.ReadingDate.ToString("d")
-                        }
-                       thisDate = plan.ReadingDate 
+                        @plan.ReadingDate.ToString("d")
                     </td>
-                    
                 </tr>
+                }
+
+                thisDate = plan.ReadingDate;
             }
         </tbody>
     </table>
