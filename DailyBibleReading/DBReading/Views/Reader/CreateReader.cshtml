@@ -1,0 +1,26 @@
+﻿@model DBReading.Models.Reader
+@{
+    ViewBag.Title = "CreateReader";
+}
+
+<h2>Add a reader</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-lg-12">
+            @Html.LabelFor(x => x.FirstName)
+            @Html.EditorFor(x => x.FirstName)
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <button type="submit" name="submit" class="btn-primary">Create</button>
+        </div>
+    </div>
+}
+

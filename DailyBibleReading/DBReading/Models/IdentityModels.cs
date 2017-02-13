@@ -25,6 +25,8 @@ namespace DBReading.Models
         public DbSet<Contact> Contact { get; set; }
         public DbSet<ReadingGroupBook> ReadingGroupBook { get; set; }
         public DbSet<BibleBook> BibleBook { get; set; }
+
+        public DbSet<Reader> Reader { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
