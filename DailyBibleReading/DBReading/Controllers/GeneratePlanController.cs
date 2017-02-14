@@ -106,46 +106,6 @@ namespace DBReading.Controllers
         {
             throw new NotImplementedException();
         }
-
-        public List<ReadingPlanDetail> CreateSingleBookReadingPlan(string name, int chapPerDay, DateTime startDate, GeneratePlanViewModel gpVM, bool isWeekDayOnly)
-        {
-            if (gpVM.ReadingPlan.ChapterPerDay == 0)
-                gpVM.ReadingPlan.ChapterPerDay = 2;
-            var totalChap = _context.BibleBook.Where(x => x.Name == name).Select(x => x.MaxChapter).FirstOrDefault();
-
-            int fromChap = 1;
-            int toChap = 0;
-            ReadingPlanDetail read = new ReadingPlanDetail();
-            List<ReadingPlanDetail> listOfReading = new List<ReadingPlanDetail>();
-            while (fromChap <= totalChap)
-            {
-                toChap = fromChap + chapPerDay - 1;
-                if (chapPerDay == 1)
-                {
-                    listOfReading.Add(new ReadingPlanDetail(name, fromChap, fromChap, startDate));
-                }
-                else if (fromChap + chapPerDay > totalChap)
-                {
-                    if (fromChap == totalChap)
-                        listOfReading.Add(new ReadingPlanDetail(name, fromChap, fromChap, startDate));
-                    else
-                        listOfReading.Add(new ReadingPlanDetail(name, fromChap, totalChap, startDate));
-                }
-                else
-                {
-                    listOfReading.Add(new ReadingPlanDetail(name, fromChap, toChap, startDate));
-                }
-
-                fromChap = fromChap + chapPerDay;
-                gpVM.ReadingPlan.EndDate = startDate;
-                if (gpVM.ReadingPlan.WeekDayOnly)
-                    startDate = gpVM.NextReadingDate(startDate, isWeekDayOnly);
-                else
-                    startDate = startDate.AddDays(1);
-            }
-            gpVM.ListOfReading = listOfReading;
-            return listOfReading;
-        }
         
         public void CreateBibleReadingPlan(IQueryable<BibleBook> books, DateTime startDate, int chapterPerDay, GeneratePlanViewModel gpVM, bool weedDayOnly)
         {
@@ -242,9 +202,7 @@ namespace DBReading.Controllers
                 throw;
             }
         }
-
-
-
+        
         public ActionResult CreatePlan2()
         {
             ReadingPlan readplan = new ReadingPlan();
