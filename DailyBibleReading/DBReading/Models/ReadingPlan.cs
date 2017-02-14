@@ -29,8 +29,9 @@ namespace DBReading.Models
         [Display(Name = "Week Day only?")]
         public bool WeekDayOnly { get; set; }
 
-        public string SelectedReadingOption { get; set; }
-        
+        public string GroupBookSelected { get; set; }
+        public string SingleBookSelected { get; set; }
+
         public ReadingPlan()
             :this("")
         {

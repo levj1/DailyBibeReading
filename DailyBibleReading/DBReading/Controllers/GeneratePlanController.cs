@@ -91,9 +91,6 @@ namespace DBReading.Controllers
                             var singleBook = _context.BibleBook.Where(x => x.Name == bookSelected);
                             CreateBibleReadingPlan(singleBook, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);                            
                             break;
-                        case "Other":
-                            break;
-
                         default:
                             break;
                     }
