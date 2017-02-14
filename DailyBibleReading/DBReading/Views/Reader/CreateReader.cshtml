@@ -7,20 +7,39 @@
 
 @using (Html.BeginForm())
 {
-    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.ValidationSummary(false, "", new { htmlAttributes = new { @class = "text-danger" }})
     @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(x => x.FirstName, htmlAttributes: new { @class = "col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(x => x.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
     <div class="row">
-        <div class="col-lg-12">
-            @Html.LabelFor(x => x.FirstName)
-            @Html.EditorFor(x => x.FirstName)
+        <div class="form-group">
+            @Html.LabelFor(x => x.MiddleName)
+            @Html.EditorFor(x => x.MiddleName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(x => x.LastName)
+            @Html.EditorFor(x => x.LastName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Email)
+            @Html.EditorFor(x => x.Email, new { @class = "form-control" })
         </div>
     </div>
 
 
     <div class="row">
-        <div class="col-lg-12">
-            <button type="submit" name="submit" class="btn-primary">Create</button>
+        <div class="form-group">
+            <button type="submit" name="submit" class="btn-primary">Add Reader</button>
         </div>
     </div>
 }
+@Html.ActionLink("List of Readers", "Index")
 

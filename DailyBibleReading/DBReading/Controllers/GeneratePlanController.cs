@@ -203,9 +203,7 @@ namespace DBReading.Controllers
                 throw;
             }
         }
-
-
-
+        
         public ActionResult CreatePlan2()
         {
             ReadingPlan readplan = new ReadingPlan();

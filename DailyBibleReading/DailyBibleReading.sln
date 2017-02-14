@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBReading", "DBReading\DBReading.csproj", "{3208976F-4F32-4C59-AFA7-CFFFD00FB644}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiCalls", "ApiCalls\ApiCalls.csproj", "{25DB0BEA-267C-443A-862A-232D90721203}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBReadingTests", "DBReadingTests\DBReadingTests.csproj", "{8D139CD6-839B-49B6-9CEA-6181D3CCE83A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{25DB0BEA-267C-443A-862A-232D90721203}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25DB0BEA-267C-443A-862A-232D90721203}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25DB0BEA-267C-443A-862A-232D90721203}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D139CD6-839B-49B6-9CEA-6181D3CCE83A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D139CD6-839B-49B6-9CEA-6181D3CCE83A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D139CD6-839B-49B6-9CEA-6181D3CCE83A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D139CD6-839B-49B6-9CEA-6181D3CCE83A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

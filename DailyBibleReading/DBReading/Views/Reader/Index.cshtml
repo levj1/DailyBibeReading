@@ -5,6 +5,7 @@
 }
 
 <h2>Index</h2>
+<h6>@Html.ActionLink("Create New", "CreateReader")</h6>
 @if (!Model.Any())
 {
     <text>There is no user yet.</text>
@@ -14,9 +15,9 @@
         <thead>
             <tr>
                 <th>First Name</th>
-                <th>Midle Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -24,9 +25,12 @@
             {
                 <tr>
                     <td>@item.FirstName</td>
-                    <td>@item.MiddleName</td>
                     <td>@item.LastName</td>
                     <td>@item.Email</td>
+                    <td>
+                        @Html.ActionLink("Detail", "Detail", new { id = item.ID }) | 
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                    </td>
                 </tr>
             }
         </tbody>

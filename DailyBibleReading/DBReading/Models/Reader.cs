@@ -10,6 +10,18 @@ namespace DBReading.Models
     {
         public int ID { get; set; }
 
+        public Reader(string fname, string mname, string lname, string email)
+        {
+            FirstName = fname;
+            MiddleName = mname;
+            LastName = lname;
+            Email = email;
+        }
+        public Reader()
+        {
+            ReaderDteCreated = DateTime.Now;
+        }
+
         [Required(ErrorMessage = "Please enter first name.")]
         [Display( Name = "First Name")]
         [StringLength(30)]
@@ -28,5 +40,20 @@ namespace DBReading.Models
         [Display(Name = "Email")]
         [StringLength(30)]
         public string Email { get; set; }
+
+        [Required]
+        public DateTime ReaderDteCreated { get; private set; }
+
+        public bool ValidEmail() { 
+            bool result = false;
+            if(Email.IndexOf('@') < 0 || Email.IndexOf('.') < 0)
+            {
+                result = false;
+            }else
+            {
+                result = true;
+            }
+            return result;
+        }
     }
 }
