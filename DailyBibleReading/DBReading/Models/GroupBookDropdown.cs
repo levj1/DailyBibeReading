@@ -33,15 +33,15 @@ namespace DBReading.Models
                 new GroupBookDropdown
                 {
                     ID = 1, Name = "Single Book"
-                },
-                 new GroupBookDropdown
-                {
-                    ID = 1, Name = "Random Books"
-                },
-                  new GroupBookDropdown
-                {
-                    ID = 1, Name = "Other"
                 }
+                // new GroupBookDropdown
+                //{
+                //    ID = 1, Name = "Random Books"
+                //},
+                //  new GroupBookDropdown
+                //{
+                //    ID = 1, Name = "Other"
+                //}
             }.AsQueryable();
         }
     }
