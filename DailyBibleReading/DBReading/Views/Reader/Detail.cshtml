@@ -1,0 +1,29 @@
+﻿@model DBReading.Models.Reader
+@{
+    ViewBag.Title = "Detail";
+}
+
+<h2>Details</h2>
+
+<table class="table-condensed">
+    <thead>
+        <tr>
+            <th>Fullname</th>
+            <th>Email</th>
+            <th>Date Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.FirstName @Model.MiddleName @Model.LastName</td>
+            <td>@Model.Email</td>
+            <td>@Model.ReaderDteCreated.ToString("d")</td> 
+        </tr>
+        <tr>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) -
+                @Html.ActionLink("Delete", "Delete", new { id = Model.ID })
+            </td>
+        </tr>
+    </tbody>
+</table>
