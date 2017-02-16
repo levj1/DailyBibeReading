@@ -46,6 +46,7 @@ namespace DBReading.Controllers
                 {
                     _context.Reader.Add(reader);
                     _context.SaveChanges();
+                    return RedirectToAction("Index");
                 }
             }
             return View();
@@ -93,6 +94,23 @@ namespace DBReading.Controllers
                 return HttpNotFound();
             }
             return View(reader);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var reader = _context.Reader.Find(id);
+            if(reader == null)
+            {
+                return HttpNotFound();
+            }
+            _context.Reader.Remove(reader);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
 
