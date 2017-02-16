@@ -23,7 +23,11 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) -
                 @Html.ActionLink("Delete", "Delete", new { id = Model.ID })
+
             </td>
+        </tr>
+        <tr>
+            <td>@Html.ActionLink("Return to List", "Index")</td>
         </tr>
     </tbody>
 </table>
