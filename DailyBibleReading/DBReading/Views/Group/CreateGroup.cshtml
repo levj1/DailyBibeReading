@@ -1,0 +1,26 @@
+﻿@model DBReading.Models.Group
+@{
+    ViewBag.Title = "CreateGroup";
+}
+
+<h2>Create a Group</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(false, "", new { @class = "alert-danger" })
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Name, new { @class = "col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(x => x.Name, new { @class = "form-control"})
+        </div>
+    </div>
+
+    <div class="col-lg-10">
+        <button type="submit" class="btn-primary">Add Group</button>
+    </div>
+
+}
+<div>
+    @Html.ActionLink("Return to List", "GroupIndex")
+</div>

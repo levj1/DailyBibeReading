@@ -9,14 +9,29 @@ namespace DBReading.Models
     public class Group
     {
         public int ID { get; set; }
+
         [Display(Name = "Group Name")]
         [StringLength(30)]
         public string Name { get; set; }
-        public ReadingPlan ReadingPlan { get; set; }
-        public IEnumerable<Reader> Reader { get; set; }
+
+        public List<ReadingPlan> ReadingPlan { get; set; }
+        public int ReadingPlanID { get; set; }
+        
+        public List<Reader> ReaderList { get; set; }
+        public int ReaderID { get; set; }
+
+        [Display(Name = "Date Created")]
+        public DateTime GroupDateCreated { get; set; }
+
+        public Group()
+        {
+            GroupDateCreated = DateTime.Now;
+            ReaderList = new List<Reader>();
+            ReadingPlan = new List<ReadingPlan>();
+        }
     }
 
-    interface IGroup
+    interface IRead
     {
         Group Group { get; set; }
         ReadingPlan Reading { get; set; }

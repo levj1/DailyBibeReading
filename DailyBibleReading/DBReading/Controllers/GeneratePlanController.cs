@@ -1,7 +1,6 @@
 ﻿using DBReading.Models;
 using DBReading.Models.Book;
 using DBReading.Models.GroupBook;
-using DBReading.Models.Passage;
 using DBReading.ViewModels;
 using Newtonsoft.Json;
 using System;
