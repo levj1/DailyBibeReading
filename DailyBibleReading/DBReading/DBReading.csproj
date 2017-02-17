@@ -163,6 +163,7 @@
     <Compile Include="Controllers\BibleApiController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\GeneratePlanController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReaderController.cs" />
@@ -271,6 +272,18 @@
     <Compile Include="Migrations\201702150158260_addReader.Designer.cs">
       <DependentUpon>201702150158260_addReader.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702170029528_Group.cs" />
+    <Compile Include="Migrations\201702170029528_Group.Designer.cs">
+      <DependentUpon>201702170029528_Group.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702170034063_GroupEditProp.cs" />
+    <Compile Include="Migrations\201702170034063_GroupEditProp.Designer.cs">
+      <DependentUpon>201702170034063_GroupEditProp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702170046538_AddGroupDateCreatedprop.cs" />
+    <Compile Include="Migrations\201702170046538_AddGroupDateCreatedprop.Designer.cs">
+      <DependentUpon>201702170046538_AddGroupDateCreatedprop.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BibleApi\BookApi.cs" />
@@ -364,6 +377,8 @@
     <Content Include="Views\Reader\Detail.cshtml" />
     <Content Include="Views\Reader\Edit.cshtml" />
     <Content Include="Views\Reader\Index.cshtml" />
+    <Content Include="Views\Group\GroupIndex.cshtml" />
+    <Content Include="Views\Group\CreateGroup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -450,6 +465,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702150158260_addReader.resx">
       <DependentUpon>201702150158260_addReader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702170029528_Group.resx">
+      <DependentUpon>201702170029528_Group.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702170034063_GroupEditProp.resx">
+      <DependentUpon>201702170034063_GroupEditProp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702170046538_AddGroupDateCreatedprop.resx">
+      <DependentUpon>201702170046538_AddGroupDateCreatedprop.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

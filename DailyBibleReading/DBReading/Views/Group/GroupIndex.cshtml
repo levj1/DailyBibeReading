@@ -1,0 +1,41 @@
+﻿@model IEnumerable<DBReading.Models.Group>
+@using System.Linq
+@{
+    ViewBag.Title = "Group";
+}
+
+<h2>Group</h2>
+<div>
+    @Html.ActionLink("Create new", "CreateGroup")
+</div>
+
+@if (!Model.Any())
+{
+    <text>No created yet created</text>
+}else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Group Name</th>
+                <th>Date Created</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.GroupDateCreated</td>
+                    <td>
+                        @Html.ActionLink("Details", "GroupDetails", new { id = item.ID }) -
+                        @Html.ActionLink("Edit", "EditGroup", new { id = item.ID }) - 
+                        @Html.ActionLink("Delete", "DeleteGroup", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
