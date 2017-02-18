@@ -8,8 +8,10 @@ namespace DBReading.Models
 {
     public class Group
     {
+        // Need to add group owner - can create group not login
         public int ID { get; set; }
 
+        [Required]
         [Display(Name = "Group Name")]
         [StringLength(30)]
         public string Name { get; set; }

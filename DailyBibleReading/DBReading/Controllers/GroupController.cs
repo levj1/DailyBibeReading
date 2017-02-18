@@ -31,5 +31,17 @@ namespace DBReading.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult CreateGroup(Group group)
+        {
+            if (ModelState.IsValid)
+            {
+                // Add group 
+                _context.Group.Add(group);
+                _context.SaveChanges();
+            }
+            return View();
+        }
     }
 }
