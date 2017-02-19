@@ -284,6 +284,14 @@
     <Compile Include="Migrations\201702170046538_AddGroupDateCreatedprop.Designer.cs">
       <DependentUpon>201702170046538_AddGroupDateCreatedprop.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702180402179_EditGroup.cs" />
+    <Compile Include="Migrations\201702180402179_EditGroup.Designer.cs">
+      <DependentUpon>201702180402179_EditGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702190138288_DeleteEndDateInReadingPlan.cs" />
+    <Compile Include="Migrations\201702190138288_DeleteEndDateInReadingPlan.Designer.cs">
+      <DependentUpon>201702190138288_DeleteEndDateInReadingPlan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BibleApi\BookApi.cs" />
@@ -379,6 +387,7 @@
     <Content Include="Views\Reader\Index.cshtml" />
     <Content Include="Views\Group\GroupIndex.cshtml" />
     <Content Include="Views\Group\CreateGroup.cshtml" />
+    <Content Include="Views\Group\GroupDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -474,6 +483,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702170046538_AddGroupDateCreatedprop.resx">
       <DependentUpon>201702170046538_AddGroupDateCreatedprop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702180402179_EditGroup.resx">
+      <DependentUpon>201702180402179_EditGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702190138288_DeleteEndDateInReadingPlan.resx">
+      <DependentUpon>201702190138288_DeleteEndDateInReadingPlan.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

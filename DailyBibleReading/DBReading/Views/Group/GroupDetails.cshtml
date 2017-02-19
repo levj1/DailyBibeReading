@@ -1,0 +1,48 @@
+﻿@model DBReading.Models.Group
+@{
+    ViewBag.Title = "GroupDetails";
+}
+
+<h2>Group Details</h2>
+
+<table class="table-bordered">
+    <thead>
+        <tr>
+            <th>Group Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.Name</td>
+        </tr>
+        <tr><th>Reading Plan(s)</th></tr>
+        <tr>
+            @if (Model.ReadingPlan.Count == 0)
+            {
+                <td>No Reading Plan yet for this group.</td>
+            }
+            else
+            {
+                foreach (var item in Model.ReadingPlan)
+                {
+                    <td>@item.Name</td>
+                }
+            }
+        </tr>
+        <tr><th>People in the group</th></tr>
+        <tr>
+            @if (Model.ReaderList.Count == 0)
+            {
+                <td>No Reader yet for this group.</td>
+            }
+            else
+            {
+                foreach (var item in Model.ReaderList)
+                {
+                    <td>@item.FirstName @item.MiddleName @item.LastName</td>
+                }
+            }
+        </tr>
+
+    </tbody>
+</table>

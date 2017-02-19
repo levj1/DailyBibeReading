@@ -18,11 +18,7 @@ namespace DBReading.Models
         [Display(Name = "Start Date")]
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
-
-        [Display(Name = "End Date")]
-        [DataType(DataType.Date)]
-        public DateTime EndDate { get; set; }
-
+                
         [Display(Name = "Number of chapter per day")]
         public int ChapterPerDay { get; set; }
 

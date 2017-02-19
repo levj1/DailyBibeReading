@@ -41,7 +41,6 @@
             <div class="form-group">
                 @Html.LabelFor(c => c.Name)
                 @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
-                @*@Html.ValidationMessage("Name", "Please enter student name.", new { @class = "text-danger" })*@
             </div>
         </div>
         <div class="row">
@@ -62,23 +61,6 @@
                 @Html.EditorFor(c => c.StartDate, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
-        @*<div class="row">
-            <div class="form-group">
-                @Html.Label("Choose a Book of set of Books") <br />
-                @foreach (var item in Model.BibleBooks.response.books)
-                {
-                    @Html.RadioButtonFor(m => m.ReadingPlan.BookOption, item.name) 
-                    @item.name <br />
-                }
-            </div>
-        </div>*@
-        @*<div class="row">
-
-            <div class="form-group">
-                @Html.Label("Select book(s) for the reading") <br />
-                @Html.DropDownListFor(m => m.DropDownReadingSelected, new SelectList(Model.DropDownReadingOption), new { onchange = "testfunction();" })
-            </div>
-        </div>*@
         <div class="row">
             <div class="form-group">
                 <label for="GroupBook">Group book:</label>

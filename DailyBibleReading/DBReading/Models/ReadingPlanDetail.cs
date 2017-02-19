@@ -59,6 +59,18 @@ namespace DBReading.Models
             if (ReadingVersionAbbr == null)
                 ReadingVersionAbbr = "NASB";
         }
+        public ReadingPlanDetail(int readinPlanId, string bookname, int start, int end, DateTime readDate)
+        {
+            ReadingPlanID = readinPlanId;
+            BookName = bookname;
+            StartVerse = start;
+            EndVerse = end;
+            ReadingDate = readDate;
+            if (ReadingLanguageAbbr == null)
+                ReadingLanguageAbbr = "eng";
+            if (ReadingVersionAbbr == null)
+                ReadingVersionAbbr = "NASB";
+        }
         public ReadingPlanDetail()
             :this("", 0, 0, DateTime.Now)
         {

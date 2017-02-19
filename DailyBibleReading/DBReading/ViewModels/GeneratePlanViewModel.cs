@@ -16,25 +16,11 @@ namespace DBReading.ViewModels
         public Rootobject_GroupBook GroupBook { get; set; }
         public ReadingPlan ReadingPlan { get; set; }
         public ReadingPlanDetail ReadingPlanDetail { get; set; }
-        public List<ReadingPlanDetail> ListOfReading { get; set; }
-        public List<ReadingPlanDetail> ListOfReadingByDate { get; set; }
-        public string[] DropDownReadingOption { get; set; }
-        public string[] ReadingList { get; set; }
-
-
-        public Dictionary<string, DateTime> ReadingAndDate { get; set; }
+        public List<ReadingPlanDetail> ListReadingDetails { get; set; }
         public GeneratePlanViewModel()
         {
-            ListOfReading = new List<ReadingPlanDetail>();
-            ListOfReadingByDate = new List<ReadingPlanDetail>();
-
-            DateTime thisDate = DateTime.Now.AddYears(-1);
-            foreach (var item in ListOfReading)
-            {
-
-            }
+            ListReadingDetails = new List<ReadingPlanDetail>();
         }
-
 
         public DateTime NextReadingDate(DateTime date, bool isWeekDayOnly )
         {

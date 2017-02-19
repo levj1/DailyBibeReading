@@ -14,7 +14,7 @@
     <text>No created yet created</text>
 }else
 {
-    <table>
+    <table class="table-striped">
         <thead>
             <tr>
                 <th>Group Name</th>
@@ -27,7 +27,7 @@
             {
                 <tr>
                     <td>@item.Name</td>
-                    <td>@item.GroupDateCreated</td>
+                    <td>@item.GroupDateCreated.ToString("d")</td>
                     <td>
                         @Html.ActionLink("Details", "GroupDetails", new { id = item.ID }) -
                         @Html.ActionLink("Edit", "EditGroup", new { id = item.ID }) - 
