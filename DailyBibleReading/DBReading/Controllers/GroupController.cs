@@ -41,7 +41,7 @@ namespace DBReading.Controllers
                 // Add group 
                 _context.Group.Add(group);
                 _context.SaveChanges();
-                RedirectToAction("GroupIndex");  
+                return RedirectToAction("GroupIndex");  
             }
             return View(group);
         }
@@ -56,6 +56,47 @@ namespace DBReading.Controllers
             if (group == null)
                 return HttpNotFound();
             return View(group);
+        }
+
+        public ActionResult EditGroup(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var group = _context.Group.Find(id);
+
+            if (group == null)
+                return HttpNotFound();
+            return View("EditGroup", group);
+        }
+
+        [HttpPost]
+        public ActionResult EditGroup(Group group)
+        {
+            if (ModelState.IsValid)
+            {
+                var dbGroup = _context.Group.Find(group.ID);
+                if(group.Name != dbGroup.Name)
+                {
+                    dbGroup.Name = group.Name;
+                    dbGroup.ReaderList = group.ReaderList;
+                    _context.SaveChanges();
+                    return RedirectToAction("GroupIndex");
+                }
+            }
+            return View("EditGroup");
+        }
+
+        public ActionResult DeleteGroup(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadGateway);
+            var group = _context.Group.Find(id);
+            if (group == null)
+                return HttpNotFound();
+
+            _context.Group.Remove(group);
+            _context.SaveChanges();
+            return RedirectToAction("GroupIndex");
         }
     }
 }

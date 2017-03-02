@@ -10,11 +10,12 @@
     @Html.AntiForgeryToken()
 
     <div class="form-group">
-        @Html.LabelFor(x => x.Name, new { @class = "col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(x => x.Name, new { @class = "form-control"})
+        <div class="col-md-12">
+            @Html.LabelFor(x => x.Name)
+            @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
         </div>
     </div>
+
 
     <div class="col-lg-10">
         <button type="submit" class="btn-primary">Add Group</button>
