@@ -1,4 +1,4 @@
-﻿@model DBReading.Models.Group
+﻿@model DBReading.ViewModels.GroupDetailViewModel
 @{
     ViewBag.Title = "GroupDetails";
 }
@@ -13,11 +13,11 @@
     </thead>
     <tbody>
         <tr>
-            <td>@Model.Name</td>
+            <td>@Model.Group.Name</td>
         </tr>
         <tr><th>Reading Plan(s)</th></tr>
-        <tr>
-            @if (Model.ReadingPlan.Count == 0)
+        @*<tr>
+            @if (Model..Count == 0)
             {
                 <td>No Reading Plan yet for this group.</td>
             }
@@ -42,7 +42,7 @@
                     <td>@item.FirstName @item.MiddleName @item.LastName</td>
                 }
             }
-        </tr>
+        </tr>*@
 
     </tbody>
 </table>

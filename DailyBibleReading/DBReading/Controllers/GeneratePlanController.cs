@@ -71,34 +71,34 @@ namespace DBReading.Controllers
                     switch (readingPlan.GroupBookSelected)
                     {
                         case "Whole Bible":
-                            var wholeBibleBooks = _context.BibleBook;
-                            CreateBibleReadingPlan(wholeBibleBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);
+                            var wholeBibleBooks = _context.BibleBook;                            
                             SaveReadingPlan(readingPlan);
+                            CreateBibleReadingPlan(wholeBibleBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);
                             SaveReadingPlanDetail(gpViewModel.ListReadingDetails);
                             break;
                         case "Old Testament":
-                            var oldTestamentBooks = _context.BibleBook.Where(x => x.Testament == "Old Testament");
-                            CreateBibleReadingPlan(oldTestamentBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);
+                            var oldTestamentBooks = _context.BibleBook.Where(x => x.Testament == "Old Testament");                            
                             SaveReadingPlan(readingPlan);
+                            CreateBibleReadingPlan(oldTestamentBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);
                             SaveReadingPlanDetail(gpViewModel.ListReadingDetails);
                             break;
                         case "New Testament":
                             var newTestamentBooks = _context.BibleBook.Where(x => x.Testament == "New Testament");
-                            CreateBibleReadingPlan(newTestamentBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);
                             SaveReadingPlan(readingPlan);
+                            CreateBibleReadingPlan(newTestamentBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);
                             SaveReadingPlanDetail(gpViewModel.ListReadingDetails);
                             break;
                         case "Group Book":
                             string groupSelect = Request.Form["Book"];
-                            var sectionBooks = _context.BibleBook.Where(x => x.ReadingGroupBook.Name == groupSelect);
-                            CreateBibleReadingPlan(sectionBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);
+                            var sectionBooks = _context.BibleBook.Where(x => x.ReadingGroupBook.Name == groupSelect);                            
                             SaveReadingPlan(readingPlan);
+                            CreateBibleReadingPlan(sectionBooks, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);
                             SaveReadingPlanDetail(gpViewModel.ListReadingDetails);
                             break;
                         case "Single Book":
-                            var singleBook = _context.BibleBook.Where(x => x.Name == readingPlan.SingleBookSelected);
-                            CreateBibleReadingPlan(singleBook, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);
+                            var singleBook = _context.BibleBook.Where(x => x.Name == readingPlan.SingleBookSelected);                            
                             SaveReadingPlan(readingPlan);
+                            CreateBibleReadingPlan(singleBook, readingPlan.StartDate, readingPlan.ChapterPerDay, gpViewModel, dayOption);
                             SaveReadingPlanDetail(gpViewModel.ListReadingDetails);
                             break;
                         default:
@@ -144,7 +144,7 @@ namespace DBReading.Controllers
             catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 

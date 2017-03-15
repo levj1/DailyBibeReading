@@ -292,6 +292,10 @@
     <Compile Include="Migrations\201702190138288_DeleteEndDateInReadingPlan.Designer.cs">
       <DependentUpon>201702190138288_DeleteEndDateInReadingPlan.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703050213242_ChangeGroup.cs" />
+    <Compile Include="Migrations\201703050213242_ChangeGroup.Designer.cs">
+      <DependentUpon>201703050213242_ChangeGroup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BibleApi\BookApi.cs" />
@@ -314,6 +318,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ContactViewModel.cs" />
     <Compile Include="ViewModels\GeneratePlanViewModel.cs" />
+    <Compile Include="ViewModels\GroupDetailViewModel.cs" />
     <Compile Include="WeatherApiClient.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -490,6 +495,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702190138288_DeleteEndDateInReadingPlan.resx">
       <DependentUpon>201702190138288_DeleteEndDateInReadingPlan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703050213242_ChangeGroup.resx">
+      <DependentUpon>201703050213242_ChangeGroup.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -16,20 +16,12 @@ namespace DBReading.Models
         [StringLength(30)]
         public string Name { get; set; }
 
-        public List<ReadingPlan> ReadingPlan { get; set; }
-        public int ReadingPlanID { get; set; }
-        
-        public List<Reader> ReaderList { get; set; }
-        public int ReaderID { get; set; }
-
         [Display(Name = "Date Created")]
         public DateTime GroupDateCreated { get; set; }
 
         public Group()
         {
             GroupDateCreated = DateTime.Now;
-            ReaderList = new List<Reader>();
-            ReadingPlan = new List<ReadingPlan>();
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using DBReading.Models;
+using DBReading.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,12 +51,40 @@ namespace DBReading.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             var group = _context.Group.Find(id);
-            _context.Entry(group).Collection(x => x.ReaderList).Load();
-            _context.Entry(group).Collection(x => x.ReaderList).Load();
             if (group == null)
                 return HttpNotFound();
-            return View(group);
+                        
+            var vmModel = new GroupDetailViewModel
+            {
+                Group = group,
+                Readers = GetReaders(group.ID),
+                ReadingPlans = GetReadingPlans(group.ID)
+            };
+            return View(vmModel);
+        }
+
+        private IEnumerable<SelectListItem> GetReadingPlans(int? id)
+        {
+            var readingPlan = _context.ReadingPlan.Select(
+                x => new SelectListItem
+                {
+                    Value = x.ID.ToString(),
+                    Text = x.Name
+                });
+            return readingPlan;
+        }
+
+        private IEnumerable<SelectListItem> GetReaders(int? id)
+        {
+            var readers = _context.Reader.Select(
+                x => new SelectListItem
+                {
+                    Value = x.ID.ToString(),
+                    Text = x.FirstName + " " + x.LastName
+                });
+            return readers;
         }
 
         public ActionResult EditGroup(int? id)
@@ -78,7 +107,6 @@ namespace DBReading.Controllers
                 if (group.Name != dbGroup.Name)
                 {
                     dbGroup.Name = group.Name;
-                    dbGroup.ReaderList = group.ReaderList;
                     _context.SaveChanges();
                     return RedirectToAction("GroupIndex");
                 }
